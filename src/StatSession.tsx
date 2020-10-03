@@ -30,6 +30,7 @@ import Chip from "@material-ui/core/Chip";
 import DialogActions from "@material-ui/core/DialogActions";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 
 import crewmate from "./crewmate.png";
 import impostor from "./impostor.png";
@@ -179,6 +180,18 @@ const StatSession = (): JSX.Element => {
           </Box>
         </TableContainer>
       </Paper>
+      <Box m={2} display="flex" justifyContent="flex-end">
+        <Tooltip title="DANGER! No warning will pop up">
+          <Button
+            endIcon={<DeleteForeverIcon />}
+            onClick={() => {
+              dispatch(statsSlice.actions.resetSession());
+            }}
+          >
+            Clear everything
+          </Button>
+        </Tooltip>
+      </Box>
     </Box>
   );
 };
@@ -238,8 +251,6 @@ function NewPlayerButton() {
   const [show, set] = useState(false);
   const [value, setValue] = React.useState("");
   const newPlayers = value.split(",").filter((it) => !!it);
-
-  console.log(newPlayers);
 
   const handleChange = (event: any) => {
     setValue(event.target.value);

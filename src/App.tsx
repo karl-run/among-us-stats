@@ -1,13 +1,14 @@
+import React from "react";
 import {
   Container,
   createMuiTheme,
   CssBaseline,
   ThemeProvider,
 } from "@material-ui/core";
-import React from "react";
+import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
-import store from "./redux";
 
+import store, { persistor } from "./redux";
 import StatSession from "./StatSession";
 
 const theme = createMuiTheme({
@@ -19,12 +20,14 @@ const theme = createMuiTheme({
 function App() {
   return (
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <Container>
-          <CssBaseline />
-          <StatSession />
-        </Container>
-      </ThemeProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <ThemeProvider theme={theme}>
+          <Container>
+            <CssBaseline />
+            <StatSession />
+          </Container>
+        </ThemeProvider>
+      </PersistGate>
     </Provider>
   );
 }

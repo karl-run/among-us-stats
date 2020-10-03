@@ -7,7 +7,7 @@ interface Session {
 }
 
 interface StatsState {
-  session: Session | null;
+  session: Session;
 }
 
 export interface Player {
@@ -79,6 +79,9 @@ export const statsSlice = createSlice({
       session.players = session.players.filter(
         (it) => it.name !== action.payload
       );
+    },
+    resetSession: (state) => {
+      state.session = initialStatsState.session;
     },
     finishGame: (
       state,
