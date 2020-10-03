@@ -109,7 +109,7 @@ const StatSession = (): JSX.Element => {
                   </TableCell>
                   {session.games.map((game, index) => {
                     return (
-                      <TableCell align="center" width="10%">
+                      <TableCell key={game.gameId} align="center" width="10%">
                         <Tooltip title="Set impostor status in game">
                           <Checkbox
                             checked={game.impostors.includes(player.name)}
@@ -135,7 +135,7 @@ const StatSession = (): JSX.Element => {
                   <NewPlayerButton />
                 </TableCell>
                 {session.games.map((game) => (
-                  <CompleteGameButton game={game} />
+                  <CompleteGameButton key={game.gameId} game={game} />
                 ))}
                 <TableCell />
               </TableRow>
@@ -273,6 +273,12 @@ function NewPlayerButton() {
     setValue(event.target.value);
   };
 
+  const addPlayers = () => {
+    dispatch(statsSlice.actions.newPlayers(newPlayers));
+    set(false);
+    setValue("");
+  };
+
   return (
     <>
       <Tooltip title="Add players">
@@ -300,6 +306,13 @@ function NewPlayerButton() {
               helperText="Separated by commas"
               value={value}
               onChange={handleChange}
+              onKeyDown={(event) => {
+                console.log(event.key);
+                if (event.key === "Enter") {
+                  event.preventDefault();
+                  addPlayers();
+                }
+              }}
               fullWidth
             />
           </Box>
@@ -311,21 +324,14 @@ function NewPlayerButton() {
             style={{ maxWidth: "350px" }}
           >
             {newPlayers.map((it) => (
-              <Box mr={1} mt={1}>
+              <Box key={it} mr={1} mt={1}>
                 <Chip label={it} />
               </Box>
             ))}
           </Box>
           <DialogActions>
             <Button onClick={() => set(false)}>Cancel</Button>
-            <Button
-              color="secondary"
-              onClick={() => {
-                dispatch(statsSlice.actions.newPlayers(newPlayers));
-                set(false);
-                setValue("");
-              }}
-            >
+            <Button color="secondary" onClick={addPlayers}>
               Add {newPlayers.length} players
             </Button>
           </DialogActions>
