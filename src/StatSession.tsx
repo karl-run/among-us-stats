@@ -31,6 +31,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import InfoIcon from "@material-ui/icons/Info";
 
 import crewmate from "./crewmate.png";
 import impostor from "./impostor.png";
@@ -55,14 +56,16 @@ const StatSession = (): JSX.Element => {
             Among Us Stats Tracker
           </Typography>
           <Tooltip title="New game">
-            <IconButton
+            <Button
+              endIcon={<AddIcon />}
               aria-label="add new game"
               onClick={() => {
                 dispatch(statsSlice.actions.newGame());
               }}
+              style={{ minWidth: "150px" }}
             >
-              <AddIcon />
-            </IconButton>
+              Add a game
+            </Button>
           </Tooltip>
         </Toolbar>
         <TableContainer component={Paper}>
@@ -180,7 +183,21 @@ const StatSession = (): JSX.Element => {
           </Box>
         </TableContainer>
       </Paper>
-      <Box m={2} display="flex" justifyContent="flex-end">
+      <Box m={2} display="flex" justifyContent="space-between">
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          style={{ opacity: 0.7 }}
+        >
+          <Box mr={1} pt={0.5}>
+            <InfoIcon />
+          </Box>
+          <Typography variant="subtitle2">
+            Remember to mark the winners for each game by clicking the tick mark
+            below a game
+          </Typography>
+        </Box>
         <Tooltip title="DANGER! No warning will pop up">
           <Button
             endIcon={<DeleteForeverIcon />}
@@ -306,6 +323,7 @@ function NewPlayerButton() {
               onClick={() => {
                 dispatch(statsSlice.actions.newPlayers(newPlayers));
                 set(false);
+                setValue("");
               }}
             >
               Add {newPlayers.length} players
