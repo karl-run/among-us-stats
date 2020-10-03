@@ -80,12 +80,7 @@ const StatSession = (): JSX.Element => {
                   Player
                 </TableCell>
                 {session.games.map((game, index) => (
-                  <TableCell
-                    key={index}
-                    width="10%"
-                    style={{ minWidth: "100px" }}
-                    align="center"
-                  >
+                  <TableCell key={index} width="150px" align="center">
                     Game {index + 1}
                   </TableCell>
                 ))}
@@ -99,7 +94,10 @@ const StatSession = (): JSX.Element => {
                     <ListItem>
                       <PlayerAvatar player={player} />
                       <ListItemText
-                        primary={player.name}
+                        primary={
+                          player.name.slice(0, 25) +
+                          (player.name.length > 25 ? "..." : "")
+                        }
                         secondary={`${Math.round(
                           player.impostorRate * 100
                         )}% impostor
@@ -109,7 +107,7 @@ const StatSession = (): JSX.Element => {
                   </TableCell>
                   {session.games.map((game, index) => {
                     return (
-                      <TableCell key={game.gameId} align="center" width="10%">
+                      <TableCell key={game.gameId} align="center">
                         <Tooltip title="Set impostor status in game">
                           <Checkbox
                             checked={game.impostors.includes(player.name)}
