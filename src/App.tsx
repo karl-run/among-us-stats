@@ -22,7 +22,7 @@ function App() {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <ThemeProvider theme={theme}>
-          <Container>
+          <Container maxWidth="xl">
             <CssBaseline />
             <StatSession />
           </Container>

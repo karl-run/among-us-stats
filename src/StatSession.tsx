@@ -95,7 +95,7 @@ const StatSession = (): JSX.Element => {
             <TableBody>
               {session.players.map((player) => (
                 <TableRow key={player.name}>
-                  <TableCell component="th" scope="row">
+                  <TableCell component="th" scope="row" padding="none">
                     <ListItem>
                       <PlayerAvatar player={player} />
                       <ListItemText
