@@ -52,7 +52,7 @@ const StatSession = (): JSX.Element => {
     <Box pt={4}>
       <Paper>
         <Toolbar>
-          <Typography variant="h4" style={{ flex: "1 1 100%" }}>
+          <Typography variant="h5" style={{ flex: "1 1 100%" }}>
             Among Us Stats Tracker
           </Typography>
           <Tooltip title="New game">
