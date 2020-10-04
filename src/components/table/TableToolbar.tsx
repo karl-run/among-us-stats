@@ -4,7 +4,6 @@ import { Box, Typography } from '@material-ui/core';
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/PlusOne';
-import GamepadIcon from '@material-ui/icons/Gamepad';
 import { useDispatch } from 'react-redux';
 import Hidden from '@material-ui/core/Hidden';
 import { makeStyles } from '@material-ui/core/styles';
@@ -31,18 +30,6 @@ function TableToolbar(): JSX.Element {
       <Hidden mdUp>
         <Box className={classes.leftMost} />
       </Hidden>
-      <Tooltip title="View scoreboard">
-        <Button
-          endIcon={<GamepadIcon />}
-          aria-label="view scoreboard"
-          onClick={() => {
-            dispatch(statsSlice.actions.newGame());
-          }}
-          style={{ minWidth: '150px' }}
-        >
-          Summary
-        </Button>
-      </Tooltip>
       <Tooltip title="New game">
         <Button
           endIcon={<AddIcon />}
