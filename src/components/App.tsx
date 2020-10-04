@@ -9,6 +9,12 @@ import Stats from './Stats';
 
 const theme = createMuiTheme({
   palette: {
+    primary: {
+      main: '#fede29',
+    },
+    secondary: {
+      main: '#fede29',
+    },
     type: 'dark',
   },
 });

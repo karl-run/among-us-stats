@@ -12,7 +12,11 @@ export interface Session {
 
 export interface Player {
   name: string;
-  winRate: number;
+  winRates: {
+    total: number;
+    impostor: number;
+    crew: number;
+  };
   impostorRate: number;
 }
 
@@ -56,11 +60,28 @@ export const statsSlice = createSlice({
         winner: null,
       });
     },
+    finishGame: (
+      state,
+      action: PayloadAction<{
+        gameId: string;
+        winner: 'crew' | 'impostor' | null;
+      }>,
+    ) => {
+      const game = findGame(action.payload.gameId, state);
+
+      game.winner = action.payload.winner;
+
+      updatePlayerStats(state);
+    },
     newPlayers: (state, action: PayloadAction<string[]>) => {
       const newPlayers: Player[] = action.payload.map((it) => ({
         name: it,
         impostorRate: 0,
-        winRate: 0,
+        winRates: {
+          total: 0,
+          crew: 0,
+          impostor: 0,
+        },
       }));
       state.session?.players.push(...newPlayers);
     },
@@ -72,17 +93,6 @@ export const statsSlice = createSlice({
     resetSession: (state) => {
       state.session = initialStatsState.session;
     },
-    finishGame: (
-      state,
-      action: PayloadAction<{
-        gameId: string;
-        winner: 'crew' | 'impostor' | null;
-      }>,
-    ) => {
-      const game = findGame(action.payload.gameId, state);
-
-      game.winner = action.payload.winner;
-    },
   },
 });
 
@@ -90,10 +100,43 @@ function updatePlayerStats(state: StatsState) {
   const session = getSession(state);
 
   const impostors = session.games.flatMap((it) => it.impostors);
+  const winnersPerGame: WinnersPerGameTuple[] = getWinnersPerGame(session);
+
+  const gameCount = session.games.length;
   session.players.forEach((player) => {
-    player.impostorRate =
-      impostors.reduce((acc, value) => acc + (value === player.name ? 1 : 0), 0) / session.games.length;
+    const impostorCount = impostors.filter((it) => it === player.name).length;
+    player.impostorRate = impostorCount / gameCount;
+    player.winRates = {
+      total: winnersPerGame.filter(([winners]) => winners.includes(player.name)).length / gameCount,
+      impostor:
+        impostorCount > 0
+          ? winnersPerGame.filter(([winners, wonByImpostors]) => wonByImpostors && winners.includes(player.name))
+              .length / impostorCount
+          : -1,
+      crew:
+        gameCount - impostorCount > 0
+          ? winnersPerGame.filter(([winners, wonByImpostors]) => !wonByImpostors && winners.includes(player.name))
+              .length /
+            (gameCount - impostorCount)
+          : -1,
+    };
   });
+}
+
+type WinnersPerGameTuple = [winners: string[], wonByImpostors: boolean];
+
+function getWinnersPerGame(session: Session): WinnersPerGameTuple[] {
+  return session.games
+    .map((it) => {
+      if (it.winner === 'impostor') {
+        return [session.players.filter((player) => it.impostors.includes(player.name)).map((it) => it.name), true];
+      } else if (it.winner === 'crew') {
+        return [session.players.filter((player) => !it.impostors.includes(player.name)).map((it) => it.name), false];
+      } else {
+        return null;
+      }
+    })
+    .filter((it): it is WinnersPerGameTuple => it != null);
 }
 
 function findGame(gameId: string, state: StatsState): Game {

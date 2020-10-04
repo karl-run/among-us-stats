@@ -55,7 +55,6 @@ function NewPlayerButton(): JSX.Element {
               value={value}
               onChange={handleChange}
               onKeyDown={(event) => {
-                console.log(event.key);
                 if (event.key === 'Enter') {
                   event.preventDefault();
                   addPlayers();
