@@ -10,7 +10,7 @@ export type RootState = ReturnType<typeof rootReducer>;
 
 const persistConfig: PersistConfig<RootState> = {
   key: 'root',
-  version: 3,
+  version: 4,
   storage,
   migrate: migrations,
 };

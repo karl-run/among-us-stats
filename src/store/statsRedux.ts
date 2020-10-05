@@ -21,12 +21,14 @@ export interface Player {
     crew: number;
   };
   impostorRate: number;
+  isAfk: boolean;
 }
 
 export interface Game {
   gameId: string;
   winner: 'crew' | 'impostor' | null;
   impostors: string[];
+  players: string[];
 }
 
 const initialStatsState: StatsState = {
@@ -39,6 +41,7 @@ const initialStatsState: StatsState = {
         gameId: v4(),
         impostors: [],
         winner: null,
+        players: [],
       },
     ],
   },
@@ -64,7 +67,17 @@ export const statsSlice = createSlice({
         gameId: v4(),
         impostors: [],
         winner: null,
+        players: state.session.players.filter((it) => !it.isAfk).map((it) => it.name),
       });
+    },
+    toggleAfk: (state, action: PayloadAction<string>) => {
+      const player = state.session.players.find((it) => it.name === action.payload);
+
+      if (!player) throw Error(`No player with name ${action.payload}`);
+
+      player.isAfk = !player.isAfk;
+
+      updatePlayerStats(state);
     },
     finishGame: (
       state,
@@ -79,7 +92,38 @@ export const statsSlice = createSlice({
 
       updatePlayerStats(state);
     },
+    removePlayerFromGame: (
+      state,
+      action: PayloadAction<{
+        gameId: string;
+        player: string;
+      }>,
+    ) => {
+      const game = findGame(action.payload.gameId, state);
+
+      game.players.splice(game.players.indexOf(action.payload.player), 1);
+      const impostorIndex = game.impostors.indexOf(action.payload.player);
+      if (impostorIndex > -1) {
+        game.impostors.splice(impostorIndex, 1);
+      }
+
+      updatePlayerStats(state);
+    },
+    addPlayerToGame: (
+      state,
+      action: PayloadAction<{
+        gameId: string;
+        player: string;
+      }>,
+    ) => {
+      const game = findGame(action.payload.gameId, state);
+
+      game.players.push(action.payload.player);
+
+      updatePlayerStats(state);
+    },
     newPlayers: (state, action: PayloadAction<string[]>) => {
+      const isFirstPlayers = state.session.players.length === 0;
       const newPlayers: Player[] = action.payload.map((it) => ({
         name: it,
         impostorRate: 0,
@@ -88,8 +132,13 @@ export const statsSlice = createSlice({
           crew: 0,
           impostor: 0,
         },
+        isAfk: false,
       }));
       state.session?.players.push(...newPlayers);
+
+      if (isFirstPlayers) {
+        state.session.games[0].players = newPlayers.map((it) => it.name);
+      }
     },
     removePlayer: (state, action: PayloadAction<string>) => {
       const session = getCurrentSession(state);
@@ -133,8 +182,18 @@ function updatePlayerStats(state: StatsState) {
   const impostors = session.games.flatMap((it) => it.impostors);
   const winnersPerGame: WinnersPerGameTuple[] = getWinnersPerGame(session);
 
-  const gameCount = session.games.length;
   session.players.forEach((player) => {
+    const gameCount = session.games.flatMap((it) => it.players).filter((it) => it === player.name).length;
+    if (gameCount === 0) {
+      player.impostorRate = -1;
+      player.winRates = {
+        impostor: -1,
+        total: -1,
+        crew: -1,
+      };
+      return;
+    }
+
     const impostorCount = impostors.filter((it) => it === player.name).length;
     player.impostorRate = impostorCount / gameCount;
     player.winRates = {
@@ -160,9 +219,9 @@ function getWinnersPerGame(session: Session): WinnersPerGameTuple[] {
   return session.games
     .map((it) => {
       if (it.winner === 'impostor') {
-        return [session.players.filter((player) => it.impostors.includes(player.name)).map((it) => it.name), true];
+        return [it.players.filter((player) => it.impostors.includes(player)), true];
       } else if (it.winner === 'crew') {
-        return [session.players.filter((player) => !it.impostors.includes(player.name)).map((it) => it.name), false];
+        return [it.players.filter((player) => !it.impostors.includes(player)), false];
       } else {
         return null;
       }

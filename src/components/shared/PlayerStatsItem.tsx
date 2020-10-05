@@ -9,6 +9,7 @@ import impostor from '../../images/impostor.png';
 import crew from '../../images/crew.png';
 import { Player } from '../../store/statsRedux';
 import { textOverflow } from '../../utils/stringUtils';
+import { percentIt } from '../../utils/mathUtils';
 
 import InlineAvatar from './InlineAvatar';
 
@@ -63,11 +64,6 @@ function PlayerStatItem({ player, placement }: { player: Player; placement: numb
       </Grid>
     </Grid>
   );
-}
-
-function percentIt(number: number): string {
-  if (number < 0) return 'n/a';
-  return `${Math.round(number * 100)}%`;
 }
 
 function ordinalSuffix(i: number): string {

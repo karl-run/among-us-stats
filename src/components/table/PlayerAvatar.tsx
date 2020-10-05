@@ -21,7 +21,7 @@ function PlayerAvatar({ player }: { player: Player }): JSX.Element {
 
   return (
     <>
-      <ListItemAvatar>
+      <ListItemAvatar style={{ opacity: player.isAfk ? 0.3 : 1 }}>
         <IconButton aria-controls="player-menu" aria-haspopup="true" onClick={handleClick}>
           <Avatar>{player.name.slice(0, 2).toUpperCase()}</Avatar>
         </IconButton>
@@ -43,7 +43,16 @@ function PlayerAvatar({ player }: { player: Player }): JSX.Element {
       >
         <MenuItem
           onClick={() => {
+            dispatch(statsSlice.actions.toggleAfk(player.name));
+            setAnchorEl(null);
+          }}
+        >
+          {player.isAfk ? 'Set not AFK' : 'Set AFK'}
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
             dispatch(statsSlice.actions.removePlayer(player.name));
+            setAnchorEl(null);
           }}
         >
           Remove
