@@ -3,9 +3,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface StatsState {
   session: Session;
+  previousSessions: Session[];
 }
 
 export interface Session {
+  sessionId: string;
+  name: string | undefined;
   players: Player[];
   games: Game[];
 }
@@ -28,6 +31,8 @@ export interface Game {
 
 const initialStatsState: StatsState = {
   session: {
+    sessionId: v4(),
+    name: 'My first game session',
     players: [],
     games: [
       {
@@ -37,6 +42,7 @@ const initialStatsState: StatsState = {
       },
     ],
   },
+  previousSessions: [],
 };
 export const statsSlice = createSlice({
   name: 'stats',
@@ -86,18 +92,43 @@ export const statsSlice = createSlice({
       state.session?.players.push(...newPlayers);
     },
     removePlayer: (state, action: PayloadAction<string>) => {
-      const session = getSession(state);
+      const session = getCurrentSession(state);
 
       session.players = session.players.filter((it) => it.name !== action.payload);
     },
     resetSession: (state) => {
       state.session = initialStatsState.session;
     },
+    newSession: (state) => {
+      state.previousSessions.push(state.session);
+      state.session = {
+        ...initialStatsState.session,
+        sessionId: v4(),
+        name: 'New session',
+      };
+    },
+    setSessionName: (state, action: PayloadAction<{ sessionId: string; newName: string | undefined }>) => {
+      const session = findSession(action.payload.sessionId, state);
+
+      session.name = action.payload.newName;
+    },
+    swapSession: (state, action: PayloadAction<string>) => {
+      if (state.session.sessionId === action.payload) {
+        return state;
+      }
+
+      const session = findSession(action.payload, state);
+      const sessionIndex = state.previousSessions.indexOf(session);
+
+      state.previousSessions.splice(sessionIndex, 1);
+      state.previousSessions.push(state.session);
+      state.session = session;
+    },
   },
 });
 
 function updatePlayerStats(state: StatsState) {
-  const session = getSession(state);
+  const session = getCurrentSession(state);
 
   const impostors = session.games.flatMap((it) => it.impostors);
   const winnersPerGame: WinnersPerGameTuple[] = getWinnersPerGame(session);
@@ -147,7 +178,19 @@ function findGame(gameId: string, state: StatsState): Game {
   return game;
 }
 
-function getSession(state: StatsState): Session {
+function findSession(sessionId: string, state: StatsState): Session {
+  if (state.session.sessionId === sessionId) {
+    return state.session;
+  }
+
+  const session: Session | undefined = state.previousSessions.find((it) => it.sessionId === sessionId);
+
+  if (!session) throw Error(`Unable to find session with session ID ${sessionId}`);
+
+  return session;
+}
+
+function getCurrentSession(state: StatsState): Session {
   const { session } = state;
 
   if (!session) throw Error('Illegal state: No active session');

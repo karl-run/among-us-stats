@@ -15,7 +15,7 @@ function TableContainer(): JSX.Element {
 
   return (
     <Paper>
-      <TableToolbar />
+      <TableToolbar session={session} />
       <TableContent session={session} />
       <TableFooter session={session} />
     </Paper>

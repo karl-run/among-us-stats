@@ -8,6 +8,7 @@ import Tooltip from '@material-ui/core/Tooltip/Tooltip';
 import impostor from '../../images/impostor.png';
 import crew from '../../images/crew.png';
 import { Player } from '../../store/statsRedux';
+import { textOverflow } from '../../utils/stringUtils';
 
 import InlineAvatar from './InlineAvatar';
 
@@ -32,7 +33,7 @@ function PlayerStatItem({ player, placement }: { player: Player; placement: numb
       <Grid container item xs={10}>
         <Grid item xs={12}>
           <Typography variant="subtitle1">
-            {player.name.slice(0, 10) + (player.name.length > 10 ? '...' : '')},{' '}
+            {textOverflow(player.name, 10)},{' '}
             <Box display="inline" fontWeight="bold">
               {percentIt(player.winRates.total)}
             </Box>{' '}

@@ -7,7 +7,9 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Checkbox from '@material-ui/core/Checkbox';
 import React from 'react';
 
+import { textOverflow } from '../../utils/stringUtils';
 import { Player, Session, statsSlice } from '../../store/statsRedux';
+import ImpostorIcon from '../shared/ImpostorIcon';
 
 import PlayerAvatar from './PlayerAvatar';
 
@@ -25,7 +27,7 @@ function PlayerTableRow({ player, session }: Props): JSX.Element {
         <ListItem>
           <PlayerAvatar player={player} />
           <ListItemText
-            primary={player.name.slice(0, 25) + (player.name.length > 25 ? '...' : '')}
+            primary={textOverflow(player.name)}
             secondary={`${Math.round(player.impostorRate * 100)}% impostor`}
           />
         </ListItem>
@@ -35,6 +37,7 @@ function PlayerTableRow({ player, session }: Props): JSX.Element {
           <TableCell key={game.gameId} align="center">
             <Tooltip title="Set impostor status in game">
               <Checkbox
+                checkedIcon={<ImpostorIcon />}
                 checked={game.impostors.includes(player.name)}
                 onChange={() => {
                   dispatch(
@@ -44,7 +47,6 @@ function PlayerTableRow({ player, session }: Props): JSX.Element {
                     }),
                   );
                 }}
-                color="secondary"
               />
             </Tooltip>
           </TableCell>

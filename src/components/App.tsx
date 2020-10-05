@@ -1,34 +1,38 @@
 import React from 'react';
-import { Container, createMuiTheme, CssBaseline, ThemeProvider } from '@material-ui/core';
+import { CssBaseline, ThemeProvider } from '@material-ui/core';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import store, { persistor } from '../store/redux';
 
 import Stats from './Stats';
-
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#fede29',
-    },
-    secondary: {
-      main: '#fede29',
-    },
-    type: 'dark',
-  },
-});
+import AppBar from './AppBar';
+import Sessions from './sessions/Sessions';
+import { theme } from './theme';
+import NotFound from './NotFound';
 
 function App(): JSX.Element {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <ThemeProvider theme={theme}>
-          <Container maxWidth="xl">
+        <Router>
+          <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Stats />
-          </Container>
-        </ThemeProvider>
+            <AppBar />
+            <Switch>
+              <Route exact path="/">
+                <Stats />
+              </Route>
+              <Route path="/sessions">
+                <Sessions />
+              </Route>
+              <Route>
+                <NotFound />
+              </Route>
+            </Switch>
+          </ThemeProvider>
+        </Router>
       </PersistGate>
     </Provider>
   );
