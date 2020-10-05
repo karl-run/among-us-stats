@@ -25,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
   numberBox: {
     padding: theme.spacing(1),
   },
+  impostorIcon: {
+    transform: 'rotateY(180deg)',
+  },
 }));
 
 function Scoreboard({ session }: Props): JSX.Element {
@@ -39,7 +42,7 @@ function Scoreboard({ session }: Props): JSX.Element {
           <Typography variant="h5">Impostors</Typography>
         </Hidden>
         <Box m={1}>
-          <Avatar src={impostor} />
+          <Avatar src={impostor} className={classes.impostorIcon} />
         </Box>
       </Box>
       <Box>
