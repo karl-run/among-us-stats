@@ -37,14 +37,7 @@ function Sessions(): JSX.Element {
         <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
             <Paper elevation={10}>
-              <SummaryCard
-                session={current}
-                extraActions={
-                  <Button size="small" disabled>
-                    Already active
-                  </Button>
-                }
-              />
+              <SummaryCard session={current} />
             </Paper>
           </Grid>
           {previous.map((it) => (

@@ -9,8 +9,8 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(1),
   },
   avatar: {
-    width: theme.spacing(2),
-    height: theme.spacing(2),
+    width: `${theme.spacing(2)}px`,
+    height: `${theme.spacing(2)}px`,
   },
 }));
 
