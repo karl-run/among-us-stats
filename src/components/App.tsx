@@ -11,6 +11,7 @@ import AppBar from './AppBar';
 import Sessions from './sessions/Sessions';
 import { theme } from './theme';
 import NotFound from './NotFound';
+import Analytics from './Analytics';
 
 function App(): JSX.Element {
   return (
@@ -18,6 +19,7 @@ function App(): JSX.Element {
       <PersistGate loading={null} persistor={persistor}>
         <Router>
           <ThemeProvider theme={theme}>
+            <Analytics />
             <CssBaseline />
             <AppBar />
             <Switch>

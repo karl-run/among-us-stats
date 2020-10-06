@@ -7026,6 +7026,7 @@ fsevents@^1.2.7:
     prettier: ^2.1.2
     react: ^16.13.1
     react-dom: ^16.13.1
+    react-ga: ^3.1.2
     react-redux: ^7.2.1
     react-refresh: ^0.8.3
     react-router-dom: ^5.2.0
@@ -12300,6 +12301,16 @@ fsevents@^1.2.7:
   version: 7.0.0-next.98
   resolution: "react-error-overlay@npm:7.0.0-next.98"
   checksum: 5f146cf1c10e88cb968a5d84aacda4daf8cf6cd6c72a8e8cc30b5b4022f267c07e0779eaddafba39108c456282888f4a2d52028ae3e19d04638ea74f3a8f82a2
+  languageName: node
+  linkType: hard
+
+"react-ga@npm:^3.1.2":
+  version: 3.1.2
+  resolution: "react-ga@npm:3.1.2"
+  peerDependencies:
+    prop-types: ^15.6.0
+    react: ^15.6.2 || ^16.0
+  checksum: c1941f97b81a85c2f62b5407ea679b704385bdd287cb2a698f9bfdd001c684e08c69a441cdfe9ed5b3e994644f7018783c666bbffa027a16e084e1a9ba7fb9d2
   languageName: node
   linkType: hard
 
