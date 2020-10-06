@@ -52,7 +52,7 @@ function TableContent({ session }: Props): JSX.Element {
           ))}
           <TableRow>
             <TableCell align="center">
-              <NewPlayerButton />
+              <NewPlayerButton noPlayers={session.players.length === 0} />
             </TableCell>
             {session.games.map((game) => (
               <CompleteGameButton key={game.gameId} game={game} />

@@ -11,7 +11,11 @@ import DialogActions from '@material-ui/core/DialogActions';
 
 import { statsSlice } from '../../store/statsRedux';
 
-function NewPlayerButton(): JSX.Element {
+interface Props {
+  noPlayers: boolean;
+}
+
+function NewPlayerButton({ noPlayers }: Props): JSX.Element {
   const dispatch = useDispatch();
   const [show, set] = useState(false);
   const [value, setValue] = React.useState('');
@@ -33,9 +37,10 @@ function NewPlayerButton(): JSX.Element {
 
   return (
     <>
-      <Tooltip title="Add players">
+      <Tooltip title="Add players to current session">
         <Button
-          aria-label="add new player"
+          autoFocus={noPlayers}
+          aria-label="add new player to current session"
           onClick={() => {
             set(true);
           }}
