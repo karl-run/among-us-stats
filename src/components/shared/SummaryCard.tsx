@@ -5,6 +5,7 @@ import WarningIcon from '@material-ui/icons/Warning';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
+import { Typography } from '@material-ui/core';
 
 import { Session } from '../../store/statsRedux';
 
@@ -14,6 +15,9 @@ import Scoreboard from './Scoreboard';
 import EditableTitle from './EditableTitle';
 
 const useStyles = makeStyles((theme) => ({
+  rootBox: {
+    position: 'relative',
+  },
   gamepadIcon: {
     marginRight: theme.spacing(1),
   },
@@ -22,6 +26,11 @@ const useStyles = makeStyles((theme) => ({
   },
   optionalActions: {
     marginRight: theme.spacing(2),
+  },
+  gamesPlayed: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
   },
 }));
 
@@ -36,7 +45,7 @@ function SummaryCard({ session, extraActions }: Props): JSX.Element {
   const unfinishedGames = session.games.filter((it) => it.winner == null).length;
 
   return (
-    <Box>
+    <Box className={classes.rootBox}>
       <Box pt={1} pl={2} display="flex" alignItems="center">
         <GamepadIcon className={classes.gamepadIcon} />
         <EditableTitle session={session} />
@@ -65,6 +74,9 @@ function SummaryCard({ session, extraActions }: Props): JSX.Element {
       </Box>
       <Box display="flex" justifyContent="center" pb={1}>
         <Scoreboard session={session} />
+      </Box>
+      <Box m={2} className={classes.gamesPlayed}>
+        <Typography variant="subtitle2">{session.games.length} games played</Typography>
       </Box>
     </Box>
   );
