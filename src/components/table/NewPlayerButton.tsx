@@ -37,8 +37,10 @@ function NewPlayerButton({ noPlayers }: Props): JSX.Element {
   };
 
   useEffect(() => {
-    GA.event({ category: 'View', action: 'addPlayerDialog' });
-  }, []);
+    if (show) {
+      GA.event({ category: 'View', action: 'addPlayerDialog' });
+    }
+  }, [show]);
 
   return (
     <>

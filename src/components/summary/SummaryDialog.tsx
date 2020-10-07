@@ -23,8 +23,10 @@ function SummaryDialog({ open, close }: Props): JSX.Element {
   const session = useSelector((state: RootState) => state.stats.session);
 
   useEffect(() => {
-    GA.event({ category: 'View', action: 'summaryDialog' });
-  }, []);
+    if (open) {
+      GA.event({ category: 'View', action: 'summaryDialog' });
+    }
+  }, [open]);
 
   return (
     <Dialog
