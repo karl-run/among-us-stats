@@ -5,6 +5,7 @@ import { PersistConfig } from 'redux-persist/es/types';
 
 import rootReducer from './reducers';
 import migrations from './migrations';
+import gaMiddleware from './gaMiddleware';
 
 export type RootState = ReturnType<typeof rootReducer>;
 
@@ -23,7 +24,7 @@ const store = configureStore({
     serializableCheck: {
       ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
     },
-  }),
+  }).concat(gaMiddleware),
 });
 
 const persistor = persistStore(store);

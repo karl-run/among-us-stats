@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux';
-import React, { useState, ChangeEvent } from 'react';
+import GA from 'react-ga';
+import React, { useState, ChangeEvent, useEffect } from 'react';
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -34,6 +35,10 @@ function NewPlayerButton({ noPlayers }: Props): JSX.Element {
     dispatch(statsSlice.actions.newPlayers(newPlayers));
     closeDialog();
   };
+
+  useEffect(() => {
+    GA.event({ category: 'View', action: 'addPlayerDialog' });
+  }, []);
 
   return (
     <>

@@ -26,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
   },
   optionalActions: {
     marginRight: theme.spacing(2),
+    '& > button': {
+      marginLeft: theme.spacing(2),
+    },
   },
   gamesPlayed: {
     position: 'absolute',

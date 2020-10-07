@@ -145,9 +145,6 @@ export const statsSlice = createSlice({
 
       session.players = session.players.filter((it) => it.name !== action.payload);
     },
-    resetSession: (state) => {
-      state.session = initialStatsState.session;
-    },
     newSession: (state) => {
       state.previousSessions.push(state.session);
       state.session = {
@@ -155,6 +152,17 @@ export const statsSlice = createSlice({
         sessionId: v4(),
         name: 'New session',
       };
+    },
+    deleteSession: (state, action: PayloadAction<string>) => {
+      if (state.session.sessionId === action.payload) {
+        state.session = initialStatsState.session;
+        return;
+      }
+
+      state.previousSessions.splice(
+        state.previousSessions.findIndex((it) => it.sessionId === action.payload),
+        1,
+      );
     },
     setSessionName: (state, action: PayloadAction<{ sessionId: string; newName: string | undefined }>) => {
       const session = findSession(action.payload.sessionId, state);
@@ -167,7 +175,7 @@ export const statsSlice = createSlice({
       }
 
       const session = findSession(action.payload, state);
-      const sessionIndex = state.previousSessions.indexOf(session);
+      const sessionIndex = state.previousSessions.findIndex((it) => it.sessionId === session.sessionId);
 
       state.previousSessions.splice(sessionIndex, 1);
       state.previousSessions.push(state.session);

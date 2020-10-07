@@ -1,9 +1,10 @@
-import React from 'react';
-import { Dialog } from '@material-ui/core';
+import React, { useEffect } from 'react';
+import GA from 'react-ga';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
 import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
 import useTheme from '@material-ui/core/styles/useTheme';
 import Button from '@material-ui/core/Button';
-import DialogActions from '@material-ui/core/DialogActions';
 import { useSelector } from 'react-redux';
 
 import SummaryCard from '../shared/SummaryCard';
@@ -20,6 +21,10 @@ function SummaryDialog({ open, close }: Props): JSX.Element {
   const theme = useTheme();
   const isSmallDevice = useMediaQuery(theme.breakpoints.down('xs'));
   const session = useSelector((state: RootState) => state.stats.session);
+
+  useEffect(() => {
+    GA.event({ category: 'View', action: 'summaryDialog' });
+  }, []);
 
   return (
     <Dialog

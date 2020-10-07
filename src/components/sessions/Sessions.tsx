@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { useSelector } from 'react-redux';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import CheckIcon from '@material-ui/icons/Check';
 import Button from '@material-ui/core/Button';
 import { useDispatch } from 'react-redux';
 
@@ -12,6 +13,8 @@ import SummaryCard from '../shared/SummaryCard';
 import { RootState } from '../../store/redux';
 import { Session, statsSlice } from '../../store/statsRedux';
 import { BreakpointLinkButton } from '../shared/BreakpointButton';
+
+import DeleteSessionButton from './DeleteSessionButton';
 
 function Sessions(): JSX.Element {
   const dispatch = useDispatch();
@@ -46,9 +49,12 @@ function Sessions(): JSX.Element {
                 <SummaryCard
                   session={it}
                   extraActions={
-                    <Button size="small" onClick={createHandleSwapClick(it.sessionId)}>
-                      Set as active
-                    </Button>
+                    <>
+                      <Button size="small" onClick={createHandleSwapClick(it.sessionId)} startIcon={<CheckIcon />}>
+                        Set as active
+                      </Button>
+                      <DeleteSessionButton session={it} />
+                    </>
                   }
                 />
               </Paper>
