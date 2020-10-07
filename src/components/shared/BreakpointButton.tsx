@@ -2,27 +2,25 @@ import React from 'react';
 import { Link, LinkProps } from 'react-router-dom';
 import useTheme from '@material-ui/core/styles/useTheme';
 import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
-import IconButton from '@material-ui/core/IconButton';
-import Button from '@material-ui/core/Button';
+import IconButton, { IconButtonProps } from '@material-ui/core/IconButton';
+import Button, { ButtonProps } from '@material-ui/core/Button';
 import Tooltip from '@material-ui/core/Tooltip';
 
-interface Props {
+interface Props extends Pick<ButtonProps, 'onClick' | 'startIcon' | 'endIcon'> {
   text: string;
-  onClick: () => void;
-  startIcon?: JSX.Element;
-  endIcon?: JSX.Element;
   label: string;
   noBreak?: boolean;
+  size?: IconButtonProps['size'];
 }
 
-function BreakpointButton({ text, onClick, startIcon, endIcon, label, noBreak = false }: Props): JSX.Element {
+function BreakpointButton({ text, onClick, startIcon, endIcon, label, size, noBreak = false }: Props): JSX.Element {
   const theme = useTheme();
   const isSmallDevice = useMediaQuery(theme.breakpoints.down('xs'));
 
   if (isSmallDevice && !noBreak) {
     return (
       <Tooltip title={label}>
-        <IconButton aria-label={label} onClick={onClick}>
+        <IconButton aria-label={label} onClick={onClick} size={size}>
           {startIcon ?? endIcon}
         </IconButton>
       </Tooltip>
@@ -36,6 +34,7 @@ function BreakpointButton({ text, onClick, startIcon, endIcon, label, noBreak = 
         endIcon={endIcon}
         onClick={onClick}
         aria-label={label}
+        size={size}
         style={{ minWidth: '150px' }}
       >
         {text}
