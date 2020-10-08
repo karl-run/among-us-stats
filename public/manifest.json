@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "AUST",
+  "name": "Among Us - Stats Tracker",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,13 +8,23 @@
       "type": "image/x-icon"
     },
     {
-      "src": "logo252.png",
+      "src": "logo-180x180.png",
       "type": "image/png",
-      "sizes": "252x252"
+      "sizes": "180x180"
+    },
+    {
+      "src": "logo-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "logo-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#424242",
+  "background_color": "#424242"
 }
