@@ -144,9 +144,10 @@ export const statsSlice = createSlice({
       const session = getCurrentSession(state);
 
       session.players = session.players.filter((it) => it.name !== action.payload);
+
       session.games.forEach((game) => {
         game.players = game.players.filter((it) => it !== action.payload);
-        game.impostors = game.players.filter((it) => it !== action.payload);
+        game.impostors = game.impostors.filter((it) => it !== action.payload);
       });
 
       updatePlayerStats(state);
