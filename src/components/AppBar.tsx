@@ -5,14 +5,17 @@ import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import FeedbackIcon from '@material-ui/icons/Feedback';
 import HistoryIcon from '@material-ui/icons/History';
 import Avatar from '@material-ui/core/Avatar/Avatar';
 import Hidden from '@material-ui/core/Hidden';
 import { Link } from 'react-router-dom';
+import { IconButton, Tooltip } from '@material-ui/core';
 
 import { statsSlice } from '../store/statsRedux';
 import crew from '../images/crew.png';
+import { commonSlice } from '../store/commonRedux';
 
 import BreakpointButton, { BreakpointLinkButton } from './shared/BreakpointButton';
 
@@ -75,6 +78,15 @@ function AppBar(): JSX.Element {
           external
           to="https://github.com/karl-run/among-us-stats/issues/new/choose"
         />
+        <Tooltip title="Open help">
+          <IconButton
+            onClick={() => {
+              dispatch(commonSlice.actions.toggleShowHelp());
+            }}
+          >
+            <HelpOutlineIcon />
+          </IconButton>
+        </Tooltip>
       </Toolbar>
     </MuiAppBar>
   );

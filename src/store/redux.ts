@@ -14,6 +14,7 @@ const persistConfig: PersistConfig<RootState> = {
   version: 4,
   storage,
   migrate: migrations,
+  blacklist: ['common'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -9,9 +9,10 @@ import store, { persistor } from '../store/redux';
 import Stats from './Stats';
 import AppBar from './AppBar';
 import Sessions from './sessions/Sessions';
-import { theme } from './theme';
+import IntroDialog from './IntroDialog';
 import NotFound from './NotFound';
 import Analytics from './Analytics';
+import { theme } from './theme';
 
 function App(): JSX.Element {
   return (
@@ -19,6 +20,7 @@ function App(): JSX.Element {
       <PersistGate loading={null} persistor={persistor}>
         <Router>
           <ThemeProvider theme={theme}>
+            <IntroDialog />
             <Analytics />
             <CssBaseline />
             <AppBar />
