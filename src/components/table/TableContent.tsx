@@ -32,6 +32,8 @@ interface Props {
 function TableContent({ session }: Props): JSX.Element {
   const classes = useStyles();
 
+  const indexOfFocusAndWarnGame = indexOfGameToComplete(session);
+
   return (
     <TableContainer component={Paper}>
       <Table aria-label="simple table">
@@ -58,10 +60,10 @@ function TableContent({ session }: Props): JSX.Element {
           ))}
           <TableRow>
             <TableCell align="center">
-              <NewPlayerButton noPlayers={session.players.length === 0} />
+              <NewPlayerButton session={session} noPlayers={session.players.length === 0} />
             </TableCell>
-            {session.games.map((game) => (
-              <CompleteGameButton key={game.gameId} game={game} />
+            {session.games.map((game, index) => (
+              <CompleteGameButton key={game.gameId} game={game} focusAndWarn={index === indexOfFocusAndWarnGame} />
             ))}
             <TableCell />
           </TableRow>
@@ -69,6 +71,15 @@ function TableContent({ session }: Props): JSX.Element {
       </Table>
     </TableContainer>
   );
+}
+
+function indexOfGameToComplete(session: Session) {
+  const incompleteGames = session.games.filter((it) => it.winner == null).length;
+  if (incompleteGames > 1) {
+    return session.games.length - 1 - [...session.games].reverse().findIndex((it) => it.winner == null);
+  }
+
+  return -1;
 }
 
 export default TableContent;

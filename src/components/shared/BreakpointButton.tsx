@@ -7,21 +7,30 @@ import IconButton, { IconButtonProps } from '@material-ui/core/IconButton';
 import Button, { ButtonProps } from '@material-ui/core/Button';
 import Tooltip from '@material-ui/core/Tooltip';
 
-interface Props extends Pick<ButtonProps, 'onClick' | 'startIcon' | 'endIcon'> {
+interface Props extends Pick<ButtonProps, 'onClick' | 'startIcon' | 'endIcon' | 'disabled'> {
   text: string;
   label: string;
   noBreak?: boolean;
   size?: IconButtonProps['size'];
 }
 
-function BreakpointButton({ text, onClick, startIcon, endIcon, label, size, noBreak = false }: Props): JSX.Element {
+function BreakpointButton({
+  text,
+  onClick,
+  startIcon,
+  endIcon,
+  disabled,
+  label,
+  size,
+  noBreak = false,
+}: Props): JSX.Element {
   const theme = useTheme();
   const isSmallDevice = useMediaQuery(theme.breakpoints.down('xs'));
 
   if (isSmallDevice && !noBreak) {
     return (
       <Tooltip title={label}>
-        <IconButton aria-label={label} onClick={onClick} size={size}>
+        <IconButton aria-label={label} onClick={onClick} size={size} disabled={disabled}>
           {startIcon ?? endIcon}
         </IconButton>
       </Tooltip>
@@ -30,16 +39,19 @@ function BreakpointButton({ text, onClick, startIcon, endIcon, label, size, noBr
 
   return (
     <Tooltip title={label}>
-      <Button
-        startIcon={startIcon}
-        endIcon={endIcon}
-        onClick={onClick}
-        aria-label={label}
-        size={size}
-        style={{ minWidth: '150px' }}
-      >
-        {text}
-      </Button>
+      <span>
+        <Button
+          startIcon={startIcon}
+          endIcon={endIcon}
+          onClick={onClick}
+          aria-label={label}
+          size={size}
+          disabled={disabled}
+          style={{ minWidth: '150px' }}
+        >
+          {text}
+        </Button>
+      </span>
     </Tooltip>
   );
 }

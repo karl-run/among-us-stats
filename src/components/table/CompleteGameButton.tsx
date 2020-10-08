@@ -1,8 +1,8 @@
 import { useDispatch } from 'react-redux';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import TableCell from '@material-ui/core/TableCell';
 import Tooltip from '@material-ui/core/Tooltip';
-import { Avatar, IconButton } from '@material-ui/core';
+import { Avatar, ButtonBaseActions, IconButton } from '@material-ui/core';
 import DoneIcon from '@material-ui/icons/Done';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -15,15 +15,33 @@ import crew from '../../images/crew.png';
 import impostor from '../../images/impostor.png';
 import { Game, statsSlice } from '../../store/statsRedux';
 
-function CompleteGameButton({ game }: { game: Game }): JSX.Element {
+interface Props {
+  game: Game;
+  focusAndWarn: boolean;
+}
+
+function CompleteGameButton({ game, focusAndWarn }: Props): JSX.Element {
   const dispatch = useDispatch();
   const [show, set] = useState(false);
+  const ref = useRef<ButtonBaseActions | null>(null);
+
+  useEffect(() => {
+    if (focusAndWarn) {
+      ref.current?.focusVisible();
+    }
+  }, [focusAndWarn]);
 
   return (
     <>
       <TableCell align="center">
-        <Tooltip title="Set winner">
-          <IconButton aria-label="add new game" onClick={() => set(true)}>
+        <Tooltip title={!focusAndWarn ? 'Set winner' : 'Remember to complete this game!'}>
+          <IconButton
+            action={focusAndWarn ? ref : undefined}
+            aria-label="add new game"
+            onClick={() => set(true)}
+            autoFocus={focusAndWarn}
+            color={focusAndWarn ? 'secondary' : 'default'}
+          >
             {game.winner === 'impostor' && <Avatar src={impostor} />}
             {game.winner === 'crew' && <Avatar src={crew} />}
             {game.winner === null && <DoneIcon />}
@@ -31,7 +49,7 @@ function CompleteGameButton({ game }: { game: Game }): JSX.Element {
         </Tooltip>
       </TableCell>
       {show && (
-        <Dialog onClose={() => set(false)} aria-labelledby="simple-dialog-title" open>
+        <Dialog open onClose={() => set(false)} aria-labelledby="who won game dialog">
           <DialogTitle id="simple-dialog-title">Who won?</DialogTitle>
           <List>
             <ListItem

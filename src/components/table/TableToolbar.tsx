@@ -57,7 +57,8 @@ function TableToolbar({ session }: Props): JSX.Element {
         <BreakpointButton
           text="Add game"
           endIcon={<AddIcon />}
-          label="Add new game"
+          label={session.players.length === 0 ? 'Add some players first' : 'Add new game'}
+          disabled={session.players.length === 0}
           onClick={() => {
             dispatch(statsSlice.actions.newGame());
           }}

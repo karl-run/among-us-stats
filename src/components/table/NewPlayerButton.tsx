@@ -1,7 +1,8 @@
+import React, { useState, ChangeEvent, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import GA from 'react-ga';
-import React, { useState, ChangeEvent, useEffect } from 'react';
 import Tooltip from '@material-ui/core/Tooltip';
+import WarningIcon from '@material-ui/icons/Warning';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -10,17 +11,23 @@ import TextField from '@material-ui/core/TextField';
 import Chip from '@material-ui/core/Chip';
 import DialogActions from '@material-ui/core/DialogActions';
 
-import { statsSlice } from '../../store/statsRedux';
+import { Session, statsSlice } from '../../store/statsRedux';
+import IconInfoText from '../shared/IconInfoText';
 
 interface Props {
+  session: Session;
   noPlayers: boolean;
 }
 
-function NewPlayerButton({ noPlayers }: Props): JSX.Element {
+function NewPlayerButton({ session, noPlayers }: Props): JSX.Element {
   const dispatch = useDispatch();
   const [show, set] = useState(false);
   const [value, setValue] = React.useState('');
-  const newPlayers = value.split(',').filter((it) => !!it);
+  const newPlayers = value
+    .split(',')
+    .map((it) => it.trim())
+    .filter((it) => !!it);
+  const duplicatePlayers = session.players.filter((it) => newPlayers.includes(it.name));
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
@@ -56,8 +63,8 @@ function NewPlayerButton({ noPlayers }: Props): JSX.Element {
         </Button>
       </Tooltip>
       {show && (
-        <Dialog onClose={closeDialog} aria-labelledby="simple-dialog-title" open>
-          <DialogTitle id="simple-dialog-title">Add players</DialogTitle>
+        <Dialog onClose={closeDialog} aria-labelledby="simple-dialog-title" open fullWidth maxWidth="xs">
+          <DialogTitle id="simple-dialog-title">Add one or more players</DialogTitle>
           <Box p={2} pt={0}>
             <TextField
               color="primary"
@@ -82,9 +89,17 @@ function NewPlayerButton({ noPlayers }: Props): JSX.Element {
               </Box>
             ))}
           </Box>
+          {duplicatePlayers.length > 0 && (
+            <Box>
+              <IconInfoText
+                text={`${duplicatePlayers.map((it) => it.name).join(', ')} are already in this game`}
+                icon={<WarningIcon />}
+              />
+            </Box>
+          )}
           <DialogActions>
             <Button onClick={closeDialog}>Cancel</Button>
-            <Button color="secondary" onClick={addPlayers}>
+            <Button color="secondary" onClick={addPlayers} disabled={duplicatePlayers.length > 0}>
               Add {newPlayers.length} players
             </Button>
           </DialogActions>
