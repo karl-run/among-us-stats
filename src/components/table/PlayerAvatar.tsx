@@ -7,6 +7,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import { Player, statsSlice } from '../../store/statsRedux';
 
+import RemovePlayerMenuItem from './RemovePlayerMenuItem';
+
 function PlayerAvatar({ player }: { player: Player }): JSX.Element {
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState<Element | null>(null);
@@ -49,14 +51,7 @@ function PlayerAvatar({ player }: { player: Player }): JSX.Element {
         >
           {player.isAfk ? 'Set not AFK' : 'Set AFK'}
         </MenuItem>
-        <MenuItem
-          onClick={() => {
-            dispatch(statsSlice.actions.removePlayer(player.name));
-            setAnchorEl(null);
-          }}
-        >
-          Remove
-        </MenuItem>
+        <RemovePlayerMenuItem player={player} close={handleClose} />
       </Menu>
     </>
   );
