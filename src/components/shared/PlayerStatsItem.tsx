@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import { Avatar, Box, Typography } from '@material-ui/core';
-import React from 'react';
+import React, { memo } from 'react';
 import Divider from '@material-ui/core/Divider';
 import Tooltip from '@material-ui/core/Tooltip/Tooltip';
 
@@ -80,4 +80,4 @@ function ordinalSuffix(i: number): string {
   return i + 'th';
 }
 
-export default PlayerStatItem;
+export default memo(PlayerStatItem);

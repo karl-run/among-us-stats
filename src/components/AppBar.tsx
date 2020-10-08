@@ -7,7 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import FeedbackIcon from '@material-ui/icons/Feedback';
-import HistoryIcon from '@material-ui/icons/History';
 import Avatar from '@material-ui/core/Avatar/Avatar';
 import Hidden from '@material-ui/core/Hidden';
 import { Link } from 'react-router-dom';
@@ -66,13 +65,7 @@ function AppBar(): JSX.Element {
           }}
         />
         <BreakpointLinkButton
-          text="Previous sessions"
-          endIcon={<HistoryIcon />}
-          label="View previous sessions"
-          to="/sessions"
-        />
-        <BreakpointLinkButton
-          text="Feedback / Report bug"
+          text="Feedback / Bug"
           endIcon={<FeedbackIcon />}
           label="Give feedback or report a bug"
           external

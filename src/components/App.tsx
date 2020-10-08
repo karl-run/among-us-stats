@@ -13,6 +13,7 @@ import IntroDialog from './IntroDialog';
 import NotFound from './NotFound';
 import Analytics from './Analytics';
 import { theme } from './theme';
+import ContentWrapper from './ContentWrapper';
 
 function App(): JSX.Element {
   return (
@@ -24,17 +25,19 @@ function App(): JSX.Element {
             <Analytics />
             <CssBaseline />
             <AppBar />
-            <Switch>
-              <Route exact path="/">
-                <Stats />
-              </Route>
-              <Route path="/sessions">
-                <Sessions />
-              </Route>
-              <Route>
-                <NotFound />
-              </Route>
-            </Switch>
+            <ContentWrapper>
+              <Switch>
+                <Route exact path="/">
+                  <Stats />
+                </Route>
+                <Route path="/sessions">
+                  <Sessions />
+                </Route>
+                <Route>
+                  <NotFound />
+                </Route>
+              </Switch>
+            </ContentWrapper>
           </ThemeProvider>
         </Router>
       </PersistGate>

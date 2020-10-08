@@ -63,7 +63,7 @@ export const statsSlice = createSlice({
       updatePlayerStats(state);
     },
     newGame: (state) => {
-      state.session?.games.push({
+      state.session?.games.unshift({
         gameId: v4(),
         impostors: [],
         winner: null,

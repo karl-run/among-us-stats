@@ -10,9 +10,11 @@ type RootState_V2 = Omit<RootState, 'stats'> & {
 
 const migrations: MigrationManifest = {
   2: () => {
+    console.info('Migrating from 1 to 2, wiping');
     return undefined;
   },
   3: (state) => {
+    console.info('Migrating from 2 to 3, adding session id and session management');
     const persistedState = (state as unknown) as RootState_V2;
     return ({
       ...persistedState,
@@ -27,6 +29,7 @@ const migrations: MigrationManifest = {
     } as unknown) as PersistedState;
   },
   4: (state) => {
+    console.info('Migrating from 3 to 4, adding afk status and players to games ');
     const persistedState = (state as unknown) as RootState;
     return ({
       ...persistedState,
@@ -55,6 +58,17 @@ const migrations: MigrationManifest = {
         })),
       },
     } as unknown) as PersistedState;
+  },
+  5: (state) => {
+    console.info('Migrating from 4 to 5, reversing order of all games');
+    const persistedState = (state as unknown) as RootState;
+
+    persistedState.stats.session.games.reverse();
+    persistedState.stats.previousSessions.forEach((session) => {
+      session.games.reverse();
+    });
+
+    return (persistedState as unknown) as PersistedState;
   },
 };
 
