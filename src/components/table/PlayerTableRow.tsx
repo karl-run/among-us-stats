@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import RemoveIcon from '@material-ui/icons/Remove';
+import AfkIcon from '@material-ui/icons/Hotel';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import ListItem from '@material-ui/core/ListItem';
@@ -48,7 +48,7 @@ function PlayerTableRow({ player, session }: Props): JSX.Element {
             <Tooltip title={tooltip}>
               <Checkbox
                 checkedIcon={<ImpostorIcon />}
-                indeterminateIcon={<RemoveIcon />}
+                indeterminateIcon={<AfkIcon style={{ opacity: 0.7 }} />}
                 checked={playerIsImpostor}
                 indeterminate={!playerInGame}
                 onChange={() => {
