@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import FeedbackIcon from '@material-ui/icons/Feedback';
 import HistoryIcon from '@material-ui/icons/History';
 import Avatar from '@material-ui/core/Avatar/Avatar';
 import Hidden from '@material-ui/core/Hidden';
@@ -66,6 +67,13 @@ function AppBar(): JSX.Element {
           endIcon={<HistoryIcon />}
           label="View previous sessions"
           to="/sessions"
+        />
+        <BreakpointLinkButton
+          text="Feedback / Report bug"
+          endIcon={<FeedbackIcon />}
+          label="Give feedback or report a bug"
+          external
+          to="https://github.com/karl-run/among-us-stats/issues/new/choose"
         />
       </Toolbar>
     </MuiAppBar>
