@@ -45,9 +45,8 @@ const RemovePlayerMenuItem: ForwardRefRenderFunction<HTMLLIElement, Props> = (
         <DialogTitle>Remove player {`"${player.name ?? 'Unnamed'}"?`}</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            This player has won {percentIt(player.winRates.total)} games and been impostor in{' '}
-            {percentIt(player.impostorRate)}
-            and will be removed from these games
+            This player has won {percentIt(player.winRates.total)} of games and been impostor in{' '}
+            {percentIt(player.impostorRate)} of games, and will be removed from these games.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
