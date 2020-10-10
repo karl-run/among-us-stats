@@ -10,7 +10,12 @@ export const gaMiddleware: Middleware = () => (next) => (action) => {
     GA.event({ category: part, action: actionName, label: getLabelFromActionPayload(action) });
   }
 
-  return next(action);
+  try {
+    next(action);
+  } catch (e) {
+    GA.event({ category: 'error', action: 'redux-error', label: e.message });
+    throw e;
+  }
 };
 
 function getLabelFromActionPayload({ type, payload }: PayloadAction<unknown>): string | undefined {

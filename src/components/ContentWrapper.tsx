@@ -5,6 +5,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Box from '@material-ui/core/Box';
 
 import LinkTab from './shared/LinkTabs';
+import ErrorBoundary from './ErrorBoundary';
 
 interface Props {
   children: JSX.Element;
@@ -16,14 +17,16 @@ function ContentWrapper({ children }: Props): JSX.Element {
   const { pathname } = useLocation();
 
   return (
-    <Container maxWidth="xl">
-      <Box pt={2} />
-      <Tabs variant="fullWidth" value={paths.indexOf(pathname)} aria-label="nav tabs example">
-        <LinkTab label="Current" to="/" />
-        <LinkTab label="Previous" to="/sessions" />
-      </Tabs>
-      {children}
-    </Container>
+    <ErrorBoundary>
+      <Container maxWidth="xl">
+        <Box pt={2} />
+        <Tabs variant="fullWidth" value={paths.indexOf(pathname)} aria-label="nav tabs example">
+          <LinkTab label="Current" to="/" />
+          <LinkTab label="Previous" to="/sessions" />
+        </Tabs>
+        {children}
+      </Container>
+    </ErrorBoundary>
   );
 }
 

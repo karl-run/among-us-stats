@@ -147,7 +147,7 @@ export const statsSlice = createSlice({
       updatePlayerStats(state);
     },
     newPlayers: (state, action: PayloadAction<{ newPlayerNames: string[]; existingPlayers: UUID[] }>) => {
-      const isFirstPlayers = state.session.players.length === 0;
+      const isFirstPlayers = state.session.games.length === 1;
 
       const newPlayers = action.payload.newPlayerNames
         .map((newPlayerName): Player => addPlayer(state, newPlayerName))
@@ -170,7 +170,10 @@ export const statsSlice = createSlice({
       state.session?.players.push(...newPlayers, ...newExistingPlayers);
 
       if (isFirstPlayers) {
-        state.session.games[0].players = newPlayers.map((it) => it.playerId);
+        state.session.games[0].players.push(
+          ...newPlayers.map((it) => it.playerId),
+          ...newExistingPlayers.map((it) => it.playerId),
+        );
       }
     },
     removePlayer: (state, action: PayloadAction<{ playerId: UUID }>) => {
@@ -203,6 +206,8 @@ export const statsSlice = createSlice({
         state.previousSessions.findIndex((it) => it.sessionId === action.payload.sessionId),
         1,
       );
+
+      cleanUpUnusedPlayers(state);
     },
     setSessionName: (state, action: PayloadAction<{ sessionId: string; newName: string | undefined }>) => {
       const session = getSession(action.payload.sessionId, state);
@@ -292,6 +297,17 @@ function updatePlayerStats(state: StatsState) {
             (gameCount - impostorCount)
           : -1,
     };
+  });
+}
+
+function cleanUpUnusedPlayers(state: StatsState) {
+  const allUsedPlayerIds = state.previousSessions
+    .flatMap((previousSession) => previousSession.players)
+    .map((player) => player.playerId);
+  const unusedPlayerIds = Object.keys(state.players).filter((playerId) => !allUsedPlayerIds.includes(playerId));
+
+  unusedPlayerIds.forEach((unusedPlayerId) => {
+    delete state.players[unusedPlayerId];
   });
 }
 

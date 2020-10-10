@@ -12,7 +12,7 @@ import { Typography } from '@material-ui/core';
 import { EnhancedPlayer, Session } from '../../store/stats/statsRedux';
 
 import CompleteGameButton from './CompleteGameButton';
-import NewPlayerButton from './NewPlayerButton';
+import NewPlayerButton from './addplayer/NewPlayerButton';
 import PlayerTableRow from './PlayerTableRow';
 
 const useStyles = makeStyles({
@@ -39,7 +39,7 @@ function TableContent({ session }: Props): JSX.Element {
         <TableHead>
           <TableRow>
             <TableCell className={classes.playerCell} width="20%" align="center">
-              Player
+              {session.players.length || 'No'} players
             </TableCell>
             {session.games.map((game, index) => (
               <TableCell className={classes.gameCell} key={index} width="150px" align="center">

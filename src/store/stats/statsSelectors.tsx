@@ -25,3 +25,6 @@ export const getPreviousSessions = (state: RootState): Session<EnhancedPlayer>[]
     players: session.players.map(enhancePlayer),
   }));
 };
+
+export const getPlayers = (state: RootState): Player[] =>
+  Object.keys(state.stats.players).map((it) => state.stats.players[it]);
