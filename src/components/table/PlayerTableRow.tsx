@@ -9,14 +9,14 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Checkbox from '@material-ui/core/Checkbox';
 
 import { textOverflow } from '../../utils/stringUtils';
-import { Player, Session, statsSlice } from '../../store/statsRedux';
+import { EnhancedPlayer, Session, statsSlice } from '../../store/stats/statsRedux';
 import ImpostorIcon from '../shared/ImpostorIcon';
 import { percentIt } from '../../utils/mathUtils';
 
 import PlayerAvatar from './PlayerAvatar';
 
 interface Props {
-  player: Player;
+  player: EnhancedPlayer;
   session: Session;
 }
 
@@ -24,7 +24,7 @@ function PlayerTableRow({ player, session }: Props): JSX.Element {
   const dispatch = useDispatch();
 
   return (
-    <TableRow key={player.name}>
+    <TableRow key={player.playerId}>
       <TableCell component="th" scope="row" padding="none">
         <ListItem>
           <PlayerAvatar player={player} />
@@ -35,8 +35,8 @@ function PlayerTableRow({ player, session }: Props): JSX.Element {
         </ListItem>
       </TableCell>
       {session.games.map((game) => {
-        const playerIsImpostor = game.impostors.includes(player.name);
-        const playerInGame = game.players.includes(player.name);
+        const playerIsImpostor = game.impostors.includes(player.playerId);
+        const playerInGame = game.players.includes(player.playerId);
         const tooltip = playerIsImpostor
           ? `${player.name} was impostor this game`
           : playerInGame
@@ -53,16 +53,18 @@ function PlayerTableRow({ player, session }: Props): JSX.Element {
                 indeterminate={!playerInGame}
                 onChange={() => {
                   if (playerIsImpostor) {
-                    dispatch(statsSlice.actions.removePlayerFromGame({ gameId: game.gameId, player: player.name }));
+                    dispatch(
+                      statsSlice.actions.removePlayerFromGame({ gameId: game.gameId, playerId: player.playerId }),
+                    );
                     return;
                   } else if (!playerInGame) {
-                    dispatch(statsSlice.actions.addPlayerToGame({ gameId: game.gameId, player: player.name }));
+                    dispatch(statsSlice.actions.addPlayerToGame({ gameId: game.gameId, playerId: player.playerId }));
                     return;
                   }
                   dispatch(
                     statsSlice.actions.toggleImpostor({
                       gameId: game.gameId,
-                      player: player.name,
+                      playerId: player.playerId,
                     }),
                   );
                 }}

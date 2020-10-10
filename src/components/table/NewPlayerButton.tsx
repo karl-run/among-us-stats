@@ -1,8 +1,7 @@
-import React, { useState, ChangeEvent, useEffect } from 'react';
+import React, { useState, useEffect, ChangeEvent, KeyboardEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import GA from 'react-ga';
 import Tooltip from '@material-ui/core/Tooltip';
-import WarningIcon from '@material-ui/icons/Warning';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -10,12 +9,13 @@ import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import Chip from '@material-ui/core/Chip';
 import DialogActions from '@material-ui/core/DialogActions';
+import WarningOutlined from '@material-ui/icons/WarningOutlined';
 
-import { Session, statsSlice } from '../../store/statsRedux';
+import { EnhancedPlayer, Session, statsSlice } from '../../store/stats/statsRedux';
 import IconInfoText from '../shared/IconInfoText';
 
 interface Props {
-  session: Session;
+  session: Session<EnhancedPlayer>;
   noPlayers: boolean;
 }
 
@@ -29,6 +29,12 @@ function NewPlayerButton({ session, noPlayers }: Props): JSX.Element {
     .filter((it) => !!it);
   const duplicatePlayers = session.players.filter((it) => newPlayers.includes(it.name));
 
+  useEffect(() => {
+    if (show) {
+      GA.event({ category: 'View', action: 'addPlayerDialog' });
+    }
+  }, [show]);
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
   };
@@ -39,15 +45,16 @@ function NewPlayerButton({ session, noPlayers }: Props): JSX.Element {
   };
 
   const addPlayers = () => {
-    dispatch(statsSlice.actions.newPlayers(newPlayers));
+    dispatch(statsSlice.actions.newPlayers({ newPlayerNames: newPlayers, existingPlayers: [] }));
     closeDialog();
   };
 
-  useEffect(() => {
-    if (show) {
-      GA.event({ category: 'View', action: 'addPlayerDialog' });
+  const handleOnKeyDown = (event: KeyboardEvent) => {
+    if (event.key === 'Enter' && duplicatePlayers.length === 0) {
+      event.preventDefault();
+      addPlayers();
     }
-  }, [show]);
+  };
 
   return (
     <>
@@ -73,12 +80,7 @@ function NewPlayerButton({ session, noPlayers }: Props): JSX.Element {
               helperText="Separated by commas"
               value={value}
               onChange={handleChange}
-              onKeyDown={(event) => {
-                if (event.key === 'Enter') {
-                  event.preventDefault();
-                  addPlayers();
-                }
-              }}
+              onKeyDown={handleOnKeyDown}
               fullWidth
             />
           </Box>
@@ -93,7 +95,7 @@ function NewPlayerButton({ session, noPlayers }: Props): JSX.Element {
             <Box>
               <IconInfoText
                 text={`${duplicatePlayers.map((it) => it.name).join(', ')} are already in this game`}
-                icon={<WarningIcon />}
+                icon={<WarningOutlined />}
               />
             </Box>
           )}

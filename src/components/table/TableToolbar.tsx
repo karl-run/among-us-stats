@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 
 import SummaryDialog from '../summary/SummaryDialog';
-import { Session, statsSlice } from '../../store/statsRedux';
+import { Session, statsSlice } from '../../store/stats/statsRedux';
 import BreakpointButton from '../shared/BreakpointButton';
 import EditableTitle from '../shared/EditableTitle';
 

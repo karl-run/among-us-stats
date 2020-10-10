@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import { Typography } from '@material-ui/core';
 
-import { Session } from '../../store/statsRedux';
+import { EnhancedPlayer, Session } from '../../store/stats/statsRedux';
 
 import PlayerStatItem from './PlayerStatsItem';
 import IconInfoText from './IconInfoText';
@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface Props {
-  session: Session;
+  session: Session<EnhancedPlayer>;
   extraActions?: JSX.Element | JSX.Element[];
 }
 
@@ -71,7 +71,7 @@ function SummaryCard({ session, extraActions }: Props): JSX.Element {
       <Box m={1}>
         <Grid container spacing={1}>
           {playersByWinRate.map((it, index) => (
-            <PlayerStatItem key={it.name} player={it} placement={index + 1} />
+            <PlayerStatItem key={it.playerId} player={it} placement={index + 1} />
           ))}
         </Grid>
       </Box>

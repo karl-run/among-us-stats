@@ -8,7 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 
-import { Session, statsSlice } from '../../store/statsRedux';
+import { Session, statsSlice } from '../../store/stats/statsRedux';
 
 interface Props {
   session: Session;
@@ -26,7 +26,7 @@ function DeleteSessionButton({ session }: Props): JSX.Element {
   const [open, set] = useState(false);
 
   const handleDelete = () => {
-    dispatch(statsSlice.actions.deleteSession(session.sessionId));
+    dispatch(statsSlice.actions.deleteSession({ sessionId: session.sessionId }));
   };
 
   return (

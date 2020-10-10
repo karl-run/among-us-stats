@@ -7,19 +7,19 @@ import CheckIcon from '@material-ui/icons/Check';
 import { useDispatch } from 'react-redux';
 
 import SummaryCard from '../shared/SummaryCard';
-import { RootState } from '../../store/redux';
-import { Session, statsSlice } from '../../store/statsRedux';
+import { statsSlice } from '../../store/stats/statsRedux';
 import BreakpointButton from '../shared/BreakpointButton';
+import { getPreviousSessions, getSession } from '../../store/stats/statsSelectors';
 
 import DeleteSessionButton from './DeleteSessionButton';
 
 function Sessions(): JSX.Element {
   const dispatch = useDispatch();
-  const previous: Session[] = useSelector((state: RootState) => state.stats.previousSessions);
-  const current: Session = useSelector((state: RootState) => state.stats.session);
+  const previous = useSelector(getPreviousSessions);
+  const current = useSelector(getSession);
 
   const createHandleSwapClick = (sessionId: string) => () => {
-    dispatch(statsSlice.actions.swapSession(sessionId));
+    dispatch(statsSlice.actions.swapSession({ sessionId }));
   };
 
   return (

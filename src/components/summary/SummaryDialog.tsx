@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import { useSelector } from 'react-redux';
 
 import SummaryCard from '../shared/SummaryCard';
-import { RootState } from '../../store/redux';
+import { getSession } from '../../store/stats/statsSelectors';
 
 import Watermark from './Watermark';
 
@@ -20,7 +20,7 @@ interface Props {
 function SummaryDialog({ open, close }: Props): JSX.Element {
   const theme = useTheme();
   const isSmallDevice = useMediaQuery(theme.breakpoints.down('xs'));
-  const session = useSelector((state: RootState) => state.stats.session);
+  const session = useSelector(getSession);
 
   useEffect(() => {
     if (open) {

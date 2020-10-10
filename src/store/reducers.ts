@@ -1,7 +1,7 @@
 import { combineReducers } from '@reduxjs/toolkit';
 
-import { commonSlice } from './commonRedux';
-import { statsSlice } from './statsRedux';
+import { commonSlice } from './common/commonRedux';
+import { statsSlice } from './stats/statsRedux';
 
 export default combineReducers({
   stats: statsSlice.reducer,

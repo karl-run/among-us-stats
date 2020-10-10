@@ -1,7 +1,7 @@
 import GA from 'react-ga';
 import { Middleware, PayloadAction } from '@reduxjs/toolkit';
 
-import { statsSlice } from './statsRedux';
+import { statsSlice } from './stats/statsRedux';
 
 export const gaMiddleware: Middleware = () => (next) => (action) => {
   const [part, actionName] = action.type.split('/');
@@ -22,7 +22,7 @@ function getLabelFromActionPayload({ type, payload }: PayloadAction<unknown>): s
     case statsSlice.actions.newPlayers.toString():
       const newPlayersPayload = payload as Parameters<typeof statsSlice.actions.newPlayers>['0'];
 
-      return `${newPlayersPayload.length}`;
+      return `new:${newPlayersPayload.newPlayerNames.length},existing${newPlayersPayload.existingPlayers.length}`;
     default:
       return undefined;
   }
