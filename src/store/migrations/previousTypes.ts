@@ -1,5 +1,6 @@
 import { RootState } from '../redux';
 import { Game, UUID } from '../stats/statsRedux';
+import { Omit } from '@material-ui/core';
 
 export type RootState_V2 = Omit<RootState, 'stats'> & {
   stats: Omit<RootState['stats'], 'previousSessions'>;
@@ -46,4 +47,16 @@ export interface Game_V5 {
 
 export type RootState_V5 = {
   stats: StatsState_V5;
+};
+
+type Session_V6 = Omit<RootState['stats']['session'], 'lastGamePlayed'>;
+
+interface StatsState_V6 {
+  session: Session_V6;
+  previousSessions: Session_V6[];
+  players: RootState['stats']['players'];
+}
+
+export type RootState_V6 = {
+  stats: StatsState_V6;
 };

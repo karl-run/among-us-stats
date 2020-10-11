@@ -2,9 +2,11 @@ import { createMigrate } from 'redux-persist';
 import { MigrationManifest, PersistedState } from 'redux-persist/es/types';
 import { v4 } from 'uuid';
 
-import { RootState } from './redux';
-import { RootState_V2, RootState_V3, RootState_V4, RootState_V5 } from './migrations/previousTypes';
-import { Player, Session, UUID } from './stats/statsRedux';
+import { RootState } from '../redux';
+import { Player, UUID } from '../stats/statsRedux';
+import { now, sub } from '../../utils/dateUtils';
+
+import { RootState_V2, RootState_V3, RootState_V4, RootState_V5, RootState_V6 } from './previousTypes';
 
 const migrations: MigrationManifest = {
   2: () => {
@@ -81,17 +83,13 @@ const migrations: MigrationManifest = {
       ].map((player) => player.trim()),
     );
 
-    console.log('all players found', existingPlayerNames);
-
     const oldToNewPlayerMap: Record<string, UUID> = {};
     existingPlayerNames.forEach((existingPlayer) => {
       oldToNewPlayerMap[existingPlayer] = v4();
     });
 
-    console.log(oldToNewPlayerMap);
-
     const oldNameToNewPlayerId = (oldName: string): UUID => oldToNewPlayerMap[oldName.trim()];
-    const oldToNewSession = (oldSession: RootState_V5['stats']['session']): Session => ({
+    const oldToNewSession = (oldSession: RootState_V5['stats']['session']): RootState_V6['stats']['session'] => ({
       ...oldSession,
       players: oldSession.players.map((player) => ({
         playerId: oldNameToNewPlayerId(player.name),
@@ -116,7 +114,7 @@ const migrations: MigrationManifest = {
       newPlayerMap[newPlayer.playerId] = newPlayer;
     });
 
-    const newState: Omit<RootState, 'common'> = {
+    const newState: Omit<RootState_V6, 'common'> = {
       stats: {
         players: newPlayerMap,
         session: oldToNewSession(persistedState.stats.session),
@@ -124,7 +122,28 @@ const migrations: MigrationManifest = {
       },
     };
 
-    console.log(newState);
+    return (newState as unknown) as PersistedState;
+  },
+  7: (state) => {
+    console.info('Migrating from 6 to 7, adding timestamps to sessions');
+    const persistedState = (state as unknown) as RootState_V6;
+
+    const newState: Omit<RootState, 'common'> = {
+      ...persistedState,
+      stats: {
+        ...persistedState.stats,
+        session: {
+          ...persistedState.stats.session,
+          lastGamePlayed: now(),
+        },
+        previousSessions: [...persistedState.stats.previousSessions].reverse().map((it, index) => {
+          return {
+            ...it,
+            lastGamePlayed: sub(now(), { days: 1, hours: index }),
+          };
+        }),
+      },
+    };
 
     return (newState as unknown) as PersistedState;
   },

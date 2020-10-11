@@ -31,7 +31,7 @@ function DeleteSessionButton({ session }: Props): JSX.Element {
 
   return (
     <>
-      <IconButton size="small" onClick={() => set(true)}>
+      <IconButton size="small" onClick={() => set(true)} aria-label="Delete this session">
         <DeleteForeverIcon />
       </IconButton>
       <Dialog open={open} onClose={() => set(false)}>

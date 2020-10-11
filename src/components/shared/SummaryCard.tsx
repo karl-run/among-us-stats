@@ -6,8 +6,10 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import { Typography } from '@material-ui/core';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import { EnhancedPlayer, Session } from '../../store/stats/statsRedux';
+import { formatDistanceToNow, parseIso } from '../../utils/dateUtils';
 
 import PlayerStatItem from './PlayerStatsItem';
 import IconInfoText from './IconInfoText';
@@ -34,6 +36,11 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     bottom: 0,
     left: 0,
+  },
+  timestamp: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
   },
 }));
 
@@ -80,6 +87,11 @@ function SummaryCard({ session, extraActions }: Props): JSX.Element {
       </Box>
       <Box m={2} className={classes.gamesPlayed}>
         <Typography variant="subtitle2">{session.games.length} games played</Typography>
+      </Box>
+      <Box m={2} className={classes.timestamp}>
+        <Tooltip interactive title={session.lastGamePlayed}>
+          <Typography variant="subtitle2">{formatDistanceToNow(parseIso(session.lastGamePlayed))} ago</Typography>
+        </Tooltip>
       </Box>
     </Box>
   );

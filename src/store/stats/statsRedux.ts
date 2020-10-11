@@ -1,6 +1,8 @@
 import { v4 } from 'uuid';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+import { now } from '../../utils/dateUtils';
+
 import { getPlayer } from './statsUtils';
 
 export type UUID = ReturnType<typeof v4>;
@@ -23,6 +25,7 @@ export interface Session<T extends EnhancedPlayer | SessionPlayer = SessionPlaye
   name: string | undefined;
   players: T[];
   games: Game[];
+  lastGamePlayed: string;
 }
 
 export interface SessionPlayer {
@@ -48,6 +51,7 @@ export const initialStatsState: StatsState = {
     sessionId: v4(),
     name: 'My first game session',
     players: [],
+    lastGamePlayed: now(),
     games: [
       {
         gameId: v4(),
@@ -76,12 +80,14 @@ export const statsSlice = createSlice({
   initialState: initialStatsState,
   reducers: {
     newGame: (state) => {
-      state.session?.games.unshift({
+      state.session.games.unshift({
         gameId: v4(),
         impostors: [],
         winner: null,
         players: state.session.players.filter((it) => !it.isAfk).map((it) => it.playerId),
       });
+
+      state.session.lastGamePlayed = now();
     },
     finishGame: (
       state,

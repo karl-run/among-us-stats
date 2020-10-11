@@ -4,14 +4,14 @@ import storage from 'redux-persist/lib/storage';
 import { PersistConfig } from 'redux-persist/es/types';
 
 import rootReducer from './reducers';
-import migrations from './migrations';
+import migrations from './migrations/migrations';
 import gaMiddleware from './gaMiddleware';
 
 export type RootState = ReturnType<typeof rootReducer>;
 
 const persistConfig: PersistConfig<RootState> = {
   key: 'root',
-  version: 6,
+  version: 7,
   storage,
   migrate: migrations,
   blacklist: ['common'],

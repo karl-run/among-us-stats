@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import TextField from '@material-ui/core/TextField';
 import Typography, { TypographyProps } from '@material-ui/core/Typography';
@@ -25,6 +25,10 @@ function EditableTitle({ session, variant = 'h6' }: Props): JSX.Element {
   const dispatch = useDispatch();
   const [edit, setEdit] = useState(false);
   const [value, setValue] = useState(session.name);
+
+  useEffect(() => {
+    setValue(session.name);
+  }, [session]);
 
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
