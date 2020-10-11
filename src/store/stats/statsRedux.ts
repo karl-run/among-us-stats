@@ -43,7 +43,7 @@ export interface Game {
   players: UUID[];
 }
 
-const initialStatsState: StatsState = {
+export const initialStatsState: StatsState = {
   session: {
     sessionId: v4(),
     name: 'My first game session',
@@ -75,17 +75,6 @@ export const statsSlice = createSlice({
   name: 'stats',
   initialState: initialStatsState,
   reducers: {
-    toggleImpostor: (state, action: PayloadAction<{ gameId: string; playerId: UUID }>) => {
-      const game = getGame(action.payload.gameId, state);
-
-      if (game.impostors.includes(action.payload.playerId)) {
-        game.impostors.splice(game.impostors.indexOf(action.payload.playerId), 1);
-      } else {
-        game.impostors.push(action.payload.playerId);
-      }
-
-      updatePlayerStats(state);
-    },
     newGame: (state) => {
       state.session?.games.unshift({
         gameId: v4(),
@@ -93,15 +82,6 @@ export const statsSlice = createSlice({
         winner: null,
         players: state.session.players.filter((it) => !it.isAfk).map((it) => it.playerId),
       });
-    },
-    toggleAfk: (state, action: PayloadAction<{ playerId: UUID }>) => {
-      const player = state.session.players.find((it) => it.playerId === action.payload.playerId);
-
-      if (!player) throw Error(`No player with name ${action.payload}`);
-
-      player.isAfk = !player.isAfk;
-
-      updatePlayerStats(state);
     },
     finishGame: (
       state,
@@ -113,36 +93,6 @@ export const statsSlice = createSlice({
       const game = getGame(action.payload.gameId, state);
 
       game.winner = action.payload.winner;
-
-      updatePlayerStats(state);
-    },
-    removePlayerFromGame: (
-      state,
-      action: PayloadAction<{
-        gameId: UUID;
-        playerId: UUID;
-      }>,
-    ) => {
-      const game = getGame(action.payload.gameId, state);
-
-      game.players.splice(game.players.indexOf(action.payload.playerId), 1);
-      const impostorIndex = game.impostors.indexOf(action.payload.playerId);
-      if (impostorIndex > -1) {
-        game.impostors.splice(impostorIndex, 1);
-      }
-
-      updatePlayerStats(state);
-    },
-    addPlayerToGame: (
-      state,
-      action: PayloadAction<{
-        gameId: UUID;
-        playerId: UUID;
-      }>,
-    ) => {
-      const game = getGame(action.payload.gameId, state);
-
-      game.players.push(action.payload.playerId);
 
       updatePlayerStats(state);
     },
@@ -175,6 +125,56 @@ export const statsSlice = createSlice({
           ...newExistingPlayers.map((it) => it.playerId),
         );
       }
+    },
+    removePlayerFromGame: (
+      state,
+      action: PayloadAction<{
+        gameId: UUID;
+        playerId: UUID;
+      }>,
+    ) => {
+      const game = getGame(action.payload.gameId, state);
+
+      game.players.splice(game.players.indexOf(action.payload.playerId), 1);
+      const impostorIndex = game.impostors.indexOf(action.payload.playerId);
+      if (impostorIndex > -1) {
+        game.impostors.splice(impostorIndex, 1);
+      }
+
+      updatePlayerStats(state);
+    },
+    addPlayerToGame: (
+      state,
+      action: PayloadAction<{
+        gameId: UUID;
+        playerId: UUID;
+      }>,
+    ) => {
+      const game = getGame(action.payload.gameId, state);
+
+      game.players.push(action.payload.playerId);
+
+      updatePlayerStats(state);
+    },
+    toggleImpostor: (state, action: PayloadAction<{ gameId: string; playerId: UUID }>) => {
+      const game = getGame(action.payload.gameId, state);
+
+      if (game.impostors.includes(action.payload.playerId)) {
+        game.impostors.splice(game.impostors.indexOf(action.payload.playerId), 1);
+      } else {
+        game.impostors.push(action.payload.playerId);
+      }
+
+      updatePlayerStats(state);
+    },
+    toggleAfk: (state, action: PayloadAction<{ playerId: UUID }>) => {
+      const player = state.session.players.find((it) => it.playerId === action.payload.playerId);
+
+      if (!player) throw Error(`No player with name ${action.payload}`);
+
+      player.isAfk = !player.isAfk;
+
+      updatePlayerStats(state);
     },
     removePlayer: (state, action: PayloadAction<{ playerId: UUID }>) => {
       const session = getCurrentSession(state);
