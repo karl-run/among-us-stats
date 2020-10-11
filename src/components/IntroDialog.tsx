@@ -15,7 +15,7 @@ import IconButton from '@material-ui/core/IconButton';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 import exampleImage from '../images/example.png';
-import { commonSlice, hasBeenShownIntroKey } from '../store/commonRedux';
+import { commonSlice, hasBeenShownIntroKey } from '../store/common/commonRedux';
 import { RootState } from '../store/redux';
 
 import ImpostorIcon from './shared/ImpostorIcon';

@@ -8,12 +8,11 @@ import TableRow from '@material-ui/core/TableRow';
 import TableBody from '@material-ui/core/TableBody';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
 
-import { Session } from '../../store/statsRedux';
+import { EnhancedPlayer, Session } from '../../store/stats/statsRedux';
 
 import CompleteGameButton from './CompleteGameButton';
-import NewPlayerButton from './NewPlayerButton';
+import NewPlayerButton from './addplayer/NewPlayerButton';
 import PlayerTableRow from './PlayerTableRow';
 
 const useStyles = makeStyles({
@@ -26,7 +25,7 @@ const useStyles = makeStyles({
 });
 
 interface Props {
-  session: Session;
+  session: Session<EnhancedPlayer>;
 }
 
 function TableContent({ session }: Props): JSX.Element {
@@ -40,15 +39,11 @@ function TableContent({ session }: Props): JSX.Element {
         <TableHead>
           <TableRow>
             <TableCell className={classes.playerCell} width="20%" align="center">
-              Player
+              {session.players.length || 'No'} players
             </TableCell>
             {session.games.map((game, index) => (
               <TableCell className={classes.gameCell} key={index} width="150px" align="center">
-                <Typography variant={index === 0 ? 'body1' : 'body2'}>
-                  <Box fontWeight={index === 0 ? 'fontWeightBold' : 'fontWeightNormal'}>
-                    Game {session.games.length - index}
-                  </Box>
-                </Typography>
+                <Typography variant={index === 0 ? 'body1' : 'body2'}>Game {session.games.length - index}</Typography>
               </TableCell>
             ))}
             <TableCell />
@@ -56,7 +51,7 @@ function TableContent({ session }: Props): JSX.Element {
         </TableHead>
         <TableBody>
           {session.players.map((player) => (
-            <PlayerTableRow key={player.name} player={player} session={session} />
+            <PlayerTableRow key={player.playerId} player={player} session={session} />
           ))}
           <TableRow>
             <TableCell align="center">

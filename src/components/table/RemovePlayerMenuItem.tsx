@@ -9,11 +9,11 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import { makeStyles } from '@material-ui/core/styles';
 import DialogContent from '@material-ui/core/DialogContent/DialogContent';
 
-import { Player, statsSlice } from '../../store/statsRedux';
+import { EnhancedPlayer, statsSlice } from '../../store/stats/statsRedux';
 import { percentIt } from '../../utils/mathUtils';
 
 interface Props {
-  player: Player;
+  player: EnhancedPlayer;
   close: () => void;
 }
 
@@ -33,7 +33,7 @@ const RemovePlayerMenuItem: ForwardRefRenderFunction<HTMLLIElement, Props> = (
 
   const handleDelete = () => {
     close();
-    dispatch(statsSlice.actions.removePlayer(player.name));
+    dispatch(statsSlice.actions.removePlayer({ playerId: player.playerId }));
   };
 
   return (

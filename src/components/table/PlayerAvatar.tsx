@@ -5,11 +5,15 @@ import { Avatar, IconButton } from '@material-ui/core';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import { Player, statsSlice } from '../../store/statsRedux';
+import { EnhancedPlayer, statsSlice } from '../../store/stats/statsRedux';
 
 import RemovePlayerMenuItem from './RemovePlayerMenuItem';
 
-function PlayerAvatar({ player }: { player: Player }): JSX.Element {
+interface Props {
+  player: EnhancedPlayer;
+}
+
+function PlayerAvatar({ player }: Props): JSX.Element {
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState<Element | null>(null);
 
@@ -45,7 +49,7 @@ function PlayerAvatar({ player }: { player: Player }): JSX.Element {
       >
         <MenuItem
           onClick={() => {
-            dispatch(statsSlice.actions.toggleAfk(player.name));
+            dispatch(statsSlice.actions.toggleAfk({ playerId: player.playerId }));
             setAnchorEl(null);
           }}
         >

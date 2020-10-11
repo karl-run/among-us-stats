@@ -12,9 +12,9 @@ import Hidden from '@material-ui/core/Hidden';
 import { Link } from 'react-router-dom';
 import { IconButton, Tooltip } from '@material-ui/core';
 
-import { statsSlice } from '../store/statsRedux';
+import { statsSlice } from '../store/stats/statsRedux';
 import crew from '../images/crew.png';
-import { commonSlice } from '../store/commonRedux';
+import { commonSlice } from '../store/common/commonRedux';
 
 import BreakpointButton, { BreakpointLinkButton } from './shared/BreakpointButton';
 

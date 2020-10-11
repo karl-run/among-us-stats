@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography, { TypographyProps } from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Session, statsSlice } from '../../store/statsRedux';
+import { Session, statsSlice } from '../../store/stats/statsRedux';
 
 const useStyles = makeStyles((theme) => ({
   title: {

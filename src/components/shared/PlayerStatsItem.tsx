@@ -7,9 +7,9 @@ import Tooltip from '@material-ui/core/Tooltip/Tooltip';
 
 import impostor from '../../images/impostor.png';
 import crew from '../../images/crew.png';
-import { Player } from '../../store/statsRedux';
 import { textOverflow } from '../../utils/stringUtils';
 import { percentIt } from '../../utils/mathUtils';
+import { EnhancedPlayer } from '../../store/stats/statsRedux';
 
 import InlineAvatar from './InlineAvatar';
 
@@ -21,7 +21,12 @@ const useStyles = makeStyles({
   },
 });
 
-function PlayerStatItem({ player, placement }: { player: Player; placement: number }): JSX.Element {
+interface Props {
+  player: EnhancedPlayer;
+  placement: number;
+}
+
+function PlayerStatItem({ player, placement }: Props): JSX.Element {
   const classes = useStyles();
 
   return (

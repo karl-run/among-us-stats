@@ -4,7 +4,7 @@ import Box from '@material-ui/core/Box/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import Hidden from '@material-ui/core/Hidden';
 
-import { Session } from '../../store/statsRedux';
+import { Session } from '../../store/stats/statsRedux';
 import impostor from '../../images/impostor.png';
 import crew from '../../images/crew.png';
 

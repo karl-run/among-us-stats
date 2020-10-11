@@ -1777,6 +1777,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@material-ui/lab@npm:^4.0.0-alpha.56":
+  version: 4.0.0-alpha.56
+  resolution: "@material-ui/lab@npm:4.0.0-alpha.56"
+  dependencies:
+    "@babel/runtime": ^7.4.4
+    "@material-ui/utils": ^4.10.2
+    clsx: ^1.0.4
+    prop-types: ^15.7.2
+    react-is: ^16.8.0
+  peerDependencies:
+    "@material-ui/core": ^4.9.10
+    "@types/react": ^16.8.6
+    react: ^16.8.0
+    react-dom: ^16.8.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: ed04d1f6c3cd926e05b4c6423c16411b6ece41adcb0a40e7a69fd29029628bc164db4579f5158fb1e7b0e26cd37769b7fc28e5a5eb3f2f7147d9c27cb1937256
+  languageName: node
+  linkType: hard
+
 "@material-ui/styles@npm:^4.10.0":
   version: 4.10.0
   resolution: "@material-ui/styles@npm:4.10.0"
@@ -7009,6 +7030,7 @@ fsevents@^1.2.7:
   dependencies:
     "@material-ui/core": ^4.11.0
     "@material-ui/icons": ^4.9.1
+    "@material-ui/lab": ^4.0.0-alpha.56
     "@reduxjs/toolkit": ^1.4.0
     "@testing-library/jest-dom": ^5.11.4
     "@testing-library/react": ^11.0.4
