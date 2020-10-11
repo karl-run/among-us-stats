@@ -10,8 +10,6 @@ import { useSelector } from 'react-redux';
 import SummaryCard from '../shared/SummaryCard';
 import { getSession } from '../../store/stats/statsSelectors';
 
-import Watermark from './Watermark';
-
 interface Props {
   open: boolean;
   close: () => void;
@@ -37,8 +35,7 @@ function SummaryDialog({ open, close }: Props): JSX.Element {
       maxWidth="sm"
       fullScreen={isSmallDevice}
     >
-      <SummaryCard session={session} />
-      <Watermark />
+      <SummaryCard session={session} noTimestamp />
       <DialogActions>
         <Button onClick={close}>Close</Button>
       </DialogActions>

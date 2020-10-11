@@ -47,9 +47,10 @@ const useStyles = makeStyles((theme) => ({
 interface Props {
   session: Session<EnhancedPlayer>;
   extraActions?: JSX.Element | JSX.Element[];
+  noTimestamp?: boolean;
 }
 
-function SummaryCard({ session, extraActions }: Props): JSX.Element {
+function SummaryCard({ session, extraActions, noTimestamp = false }: Props): JSX.Element {
   const classes = useStyles();
   const playersByWinRate = [...session.players].sort((a, b) => b.winRates.total - a.winRates.total);
   const unfinishedGames = session.games.filter((it) => it.winner == null).length;
@@ -82,17 +83,19 @@ function SummaryCard({ session, extraActions }: Props): JSX.Element {
           ))}
         </Grid>
       </Box>
-      <Box display="flex" justifyContent="center" pb={1}>
+      <Box display="flex" justifyContent="center" pb={4}>
         <Scoreboard session={session} />
       </Box>
       <Box m={2} className={classes.gamesPlayed}>
         <Typography variant="subtitle2">{session.games.length} games played</Typography>
       </Box>
-      <Box m={2} className={classes.timestamp}>
-        <Tooltip interactive title={session.lastGamePlayed}>
-          <Typography variant="subtitle2">{formatDistanceToNow(parseIso(session.lastGamePlayed))} ago</Typography>
-        </Tooltip>
-      </Box>
+      {!noTimestamp && (
+        <Box m={2} className={classes.timestamp}>
+          <Tooltip interactive title={session.lastGamePlayed}>
+            <Typography variant="subtitle2">{formatDistanceToNow(parseIso(session.lastGamePlayed))} ago</Typography>
+          </Tooltip>
+        </Box>
+      )}
     </Box>
   );
 }
