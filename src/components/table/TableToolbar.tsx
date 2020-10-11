@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import Toolbar from '@material-ui/core/Toolbar';
 import { Box } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/PlusOne';
@@ -37,7 +38,8 @@ interface Props {
 function TableToolbar({ session }: Props): JSX.Element {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [show, set] = useState(false);
+  const history = useHistory();
+  const location = useLocation();
 
   return (
     <>
@@ -51,7 +53,7 @@ function TableToolbar({ session }: Props): JSX.Element {
           endIcon={<GamepadIcon />}
           label="View scoreboard"
           onClick={() => {
-            set(true);
+            history.push('/summary');
           }}
         />
         <BreakpointButton
@@ -64,7 +66,12 @@ function TableToolbar({ session }: Props): JSX.Element {
           }}
         />
       </Toolbar>
-      <SummaryDialog open={show} close={() => set(false)} />
+      <SummaryDialog
+        open={location.pathname === '/summary'}
+        close={() => {
+          history.push('/');
+        }}
+      />
     </>
   );
 }

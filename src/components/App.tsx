@@ -27,7 +27,7 @@ function App(): JSX.Element {
             <AppBar />
             <ContentWrapper>
               <Switch>
-                <Route exact path="/">
+                <Route exact path={['/', '/summary']}>
                   <Stats />
                 </Route>
                 <Route path="/sessions">

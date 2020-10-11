@@ -11,7 +11,10 @@ interface Props {
   children: JSX.Element;
 }
 
-const paths = ['/', '/sessions'];
+const paths = [['/', '/summary'], '/sessions'];
+
+const getIndex = (path: string): number =>
+  paths.findIndex((it) => (typeof it === 'string' ? it === path : it.includes(path)));
 
 function ContentWrapper({ children }: Props): JSX.Element {
   const { pathname } = useLocation();
@@ -20,7 +23,7 @@ function ContentWrapper({ children }: Props): JSX.Element {
     <ErrorBoundary>
       <Container maxWidth="xl">
         <Box pt={2} />
-        <Tabs variant="fullWidth" value={paths.indexOf(pathname)} aria-label="nav tabs example">
+        <Tabs variant="fullWidth" value={getIndex(pathname)} aria-label="nav tabs example">
           <LinkTab label="Current" to="/" />
           <LinkTab label="Previous" to="/sessions" />
         </Tabs>
