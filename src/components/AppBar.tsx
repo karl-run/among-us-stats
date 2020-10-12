@@ -6,7 +6,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
-import FeedbackIcon from '@material-ui/icons/Feedback';
 import Avatar from '@material-ui/core/Avatar/Avatar';
 import Hidden from '@material-ui/core/Hidden';
 import { Link } from 'react-router-dom';
@@ -15,7 +14,8 @@ import { statsSlice } from '../store/stats/statsRedux';
 import crew from '../images/crew.png';
 import { commonSlice } from '../store/common/commonRedux';
 
-import BreakpointButton, { BreakpointLinkButton } from './shared/BreakpointButton';
+import BreakpointButton from './shared/BreakpointButton';
+import FeedbackButton from './FeedbackButton';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,13 +63,7 @@ function AppBar(): JSX.Element {
             dispatch(statsSlice.actions.newSession());
           }}
         />
-        <BreakpointLinkButton
-          text="Feedback / Bug"
-          endIcon={<FeedbackIcon />}
-          label="Give feedback or report a bug"
-          external
-          to="https://github.com/karl-run/among-us-stats/issues/new/choose"
-        />
+        <FeedbackButton />
         <BreakpointButton
           text="Help"
           endIcon={<HelpOutlineIcon />}
