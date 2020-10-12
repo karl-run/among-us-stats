@@ -10,7 +10,6 @@ import FeedbackIcon from '@material-ui/icons/Feedback';
 import Avatar from '@material-ui/core/Avatar/Avatar';
 import Hidden from '@material-ui/core/Hidden';
 import { Link } from 'react-router-dom';
-import { IconButton, Tooltip } from '@material-ui/core';
 
 import { statsSlice } from '../store/stats/statsRedux';
 import crew from '../images/crew.png';
@@ -71,15 +70,14 @@ function AppBar(): JSX.Element {
           external
           to="https://github.com/karl-run/among-us-stats/issues/new/choose"
         />
-        <Tooltip title="Open help">
-          <IconButton
-            onClick={() => {
-              dispatch(commonSlice.actions.toggleShowHelp());
-            }}
-          >
-            <HelpOutlineIcon />
-          </IconButton>
-        </Tooltip>
+        <BreakpointButton
+          text="Help"
+          endIcon={<HelpOutlineIcon />}
+          label="Open help dialog"
+          onClick={() => {
+            dispatch(commonSlice.actions.toggleShowHelp());
+          }}
+        />
       </Toolbar>
     </MuiAppBar>
   );

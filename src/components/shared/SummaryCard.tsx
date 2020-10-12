@@ -5,13 +5,13 @@ import WarningIcon from '@material-ui/icons/Warning';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
-import { Typography } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import { EnhancedPlayer, Session } from '../../store/stats/statsRedux';
 import { formatDistanceToNow, parseIso } from '../../utils/dateUtils';
 
-import PlayerStatItem from './PlayerStatsItem';
+import PlayerStatsItem from './PlayerStatsItem';
 import IconInfoText from './IconInfoText';
 import Scoreboard from './Scoreboard';
 import EditableTitle from './EditableTitle';
@@ -79,7 +79,7 @@ function SummaryCard({ session, extraActions, noTimestamp = false }: Props): JSX
       <Box m={1}>
         <Grid container spacing={1}>
           {playersByWinRate.map((it, index) => (
-            <PlayerStatItem key={it.playerId} player={it} placement={index + 1} />
+            <PlayerStatsItem key={it.playerId} player={it} placement={index + 1} />
           ))}
         </Grid>
       </Box>

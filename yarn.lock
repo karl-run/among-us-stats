@@ -7054,6 +7054,7 @@ fsevents@^1.2.7:
     eslint-plugin-import: ^2.22.1
     eslint-plugin-prettier: ^3.1.4
     prettier: ^2.1.2
+    rambda: ^6.2.0
     react: ^16.13.1
     react-dom: ^16.13.1
     react-ga: ^3.1.2
@@ -12226,6 +12227,13 @@ fsevents@^1.2.7:
   dependencies:
     performance-now: ^2.1.0
   checksum: 567b0160be46ed20b124a05ace6e653f4ad3c047c48d02ac76161e9ac624488c0fdf622b2f4fb9c35c0c828a13dfa549044ad1db89c7af075cb0f99403b88c4b
+  languageName: node
+  linkType: hard
+
+"rambda@npm:^6.2.0":
+  version: 6.2.0
+  resolution: "rambda@npm:6.2.0"
+  checksum: 920b4c85ce9191126933c8cb4d899a1e4a930735dd6d22208b1bd8ce3f1cdd71f6011f26d23c3040ecd456e8a28566b1c3c8b07dc128e301b33e6930956b6589
   languageName: node
   linkType: hard
 

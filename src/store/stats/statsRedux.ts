@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { now } from '../../utils/dateUtils';
 
-import { getPlayer } from './statsUtils';
+import { getPlayer, getWinnersPerGame, WinnersPerGameTuple } from './statsUtils';
 
 export type UUID = ReturnType<typeof v4>;
 
@@ -273,7 +273,7 @@ function updatePlayerStats(state: StatsState) {
   const session = getCurrentSession(state);
 
   const impostors = session.games.flatMap((it) => it.impostors);
-  const winnersPerGame: WinnersPerGameTuple[] = getWinnersPerGame(session);
+  const winnersPerGame: WinnersPerGameTuple[] = getWinnersPerGame(session.games);
 
   session.players.forEach((player) => {
     const gameCount = session.games.flatMap((it) => it.players).filter((it) => it === player.playerId).length;
@@ -315,22 +315,6 @@ function cleanUpUnusedPlayers(state: StatsState) {
   unusedPlayerIds.forEach((unusedPlayerId) => {
     delete state.players[unusedPlayerId];
   });
-}
-
-type WinnersPerGameTuple = [winners: string[], wonByImpostors: boolean];
-
-function getWinnersPerGame(session: Session): WinnersPerGameTuple[] {
-  return session.games
-    .map((it) => {
-      if (it.winner === 'impostor') {
-        return [it.players.filter((player) => it.impostors.includes(player)), true];
-      } else if (it.winner === 'crew') {
-        return [it.players.filter((player) => !it.impostors.includes(player)), false];
-      } else {
-        return null;
-      }
-    })
-    .filter((it): it is WinnersPerGameTuple => it != null);
 }
 
 function getGame(gameId: string, state: StatsState): Game {

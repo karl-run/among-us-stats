@@ -14,6 +14,7 @@ import NotFound from './NotFound';
 import Analytics from './Analytics';
 import { theme } from './theme';
 import ContentWrapper from './ContentWrapper';
+import PlayersOverview from './playersoverview/PlayersOverview';
 
 function App(): JSX.Element {
   return (
@@ -32,6 +33,9 @@ function App(): JSX.Element {
                 </Route>
                 <Route path="/sessions">
                   <Sessions />
+                </Route>
+                <Route path="/players">
+                  <PlayersOverview />
                 </Route>
                 <Route>
                   <NotFound />

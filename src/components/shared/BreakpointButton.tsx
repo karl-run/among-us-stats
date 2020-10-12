@@ -47,7 +47,6 @@ function BreakpointButton({
           aria-label={label}
           size={size}
           disabled={disabled}
-          style={{ minWidth: '150px' }}
         >
           {text}
         </Button>

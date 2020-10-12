@@ -26,7 +26,7 @@ interface Props {
   placement: number;
 }
 
-function PlayerStatItem({ player, placement }: Props): JSX.Element {
+function PlayerStatsItem({ player, placement }: Props): JSX.Element {
   const classes = useStyles();
 
   return (
@@ -85,4 +85,4 @@ function ordinalSuffix(i: number): string {
   return i + 'th';
 }
 
-export default memo(PlayerStatItem);
+export default memo(PlayerStatsItem);
