@@ -1,7 +1,7 @@
 import { Game, Player, UUID } from './statsRedux';
 
 export function getPlayer(players: Record<UUID, Player>, playerId: UUID): Player {
-  return players[playerId] ?? null;
+  return players[playerId] ?? { name: 'Unknown player', playerId: 'unknown' };
 }
 
 export type WinnersPerGameTuple = [winners: string[], wonByImpostors: boolean];

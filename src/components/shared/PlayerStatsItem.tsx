@@ -12,6 +12,7 @@ import { percentIt } from '../../utils/mathUtils';
 import { EnhancedPlayer } from '../../store/stats/statsRedux';
 
 import InlineAvatar from './InlineAvatar';
+import { WarningOutlined } from '@material-ui/icons';
 
 const useStyles = makeStyles({
   subtitle: {
@@ -39,6 +40,13 @@ function PlayerStatsItem({ player, placement }: Props): JSX.Element {
       <Grid container item xs={10}>
         <Grid item xs={12}>
           <Typography variant="subtitle1">
+            <Box display="inline-flex" alignItems="center">
+              {player.name === 'Unknown player' && (
+                <Tooltip title="Some data has been corrupted, please send a bug report!">
+                  <WarningOutlined color="secondary" />
+                </Tooltip>
+              )}
+            </Box>{' '}
             {textOverflow(player.name, 10)},{' '}
             <Box display="inline" fontWeight="bold">
               {percentIt(player.winRates.total)}
