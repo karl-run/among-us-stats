@@ -13,7 +13,10 @@ export const gaMiddleware: Middleware = () => (next) => (action) => {
   try {
     next(action);
   } catch (e) {
-    GA.event({ category: 'error', action: 'redux-error', label: e.message });
+    GA.exception({
+      description: `Redux: ${e.message}`,
+      fatal: false,
+    });
     throw e;
   }
 };

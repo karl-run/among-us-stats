@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { useLocation } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import Tabs from '@material-ui/core/Tabs';
@@ -8,10 +8,9 @@ import { useSelector } from 'react-redux';
 import { getPlayers } from '../store/stats/statsSelectors';
 
 import LinkTab from './shared/LinkTabs';
-import ErrorBoundary from './ErrorBoundary';
 
 interface Props {
-  children: JSX.Element;
+  children: ReactNode;
 }
 
 const paths = [['/', '/summary'], '/sessions', '/players'];
@@ -24,17 +23,15 @@ function ContentWrapper({ children }: Props): JSX.Element {
   const { pathname } = useLocation();
 
   return (
-    <ErrorBoundary>
-      <Container maxWidth="xl">
-        <Box pt={2} />
-        <Tabs variant="fullWidth" value={getIndex(pathname)} aria-label="nav tabs example">
-          <LinkTab label="Current" to="/" />
-          <LinkTab label="Previous" to="/sessions" />
-          {hasPlayers && <LinkTab label="Players" to="/players" />}
-        </Tabs>
-        {children}
-      </Container>
-    </ErrorBoundary>
+    <Container maxWidth="xl">
+      <Box pt={2} />
+      <Tabs variant="fullWidth" value={getIndex(pathname)} aria-label="nav tabs example">
+        <LinkTab label="Current" to="/" />
+        <LinkTab label="Previous" to="/sessions" />
+        {hasPlayers && <LinkTab label="Players" to="/players" />}
+      </Tabs>
+      {children}
+    </Container>
   );
 }
 

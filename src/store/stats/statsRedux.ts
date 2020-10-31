@@ -132,6 +132,9 @@ export const statsSlice = createSlice({
         );
       }
     },
+    /**
+     * Marks player as AFK for a single game, i.e. not a player and not a impostor.
+     */
     removePlayerFromGame: (
       state,
       action: PayloadAction<{
@@ -182,6 +185,10 @@ export const statsSlice = createSlice({
 
       updatePlayerStats(state);
     },
+    /**
+     * Removes a player from the current session, if player is unused in any other sessions it will also be
+     * removed from the player overview.
+     */
     removePlayer: (state, action: PayloadAction<{ playerId: UUID }>) => {
       const session = getCurrentSession(state);
 
@@ -193,6 +200,7 @@ export const statsSlice = createSlice({
       });
 
       updatePlayerStats(state);
+      cleanUpUnusedPlayers(state);
     },
     newSession: (state) => {
       state.previousSessions.push(state.session);

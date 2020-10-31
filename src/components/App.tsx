@@ -15,35 +15,38 @@ import Analytics from './Analytics';
 import { theme } from './theme';
 import ContentWrapper from './ContentWrapper';
 import PlayersOverview from './playersoverview/PlayersOverview';
+import ErrorBoundary from './ErrorBoundary';
 
 function App(): JSX.Element {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <Router>
-          <ThemeProvider theme={theme}>
-            <IntroDialog />
-            <Analytics />
-            <CssBaseline />
-            <AppBar />
-            <ContentWrapper>
-              <Switch>
-                <Route exact path={['/', '/summary']}>
-                  <Stats />
-                </Route>
-                <Route path="/sessions">
-                  <Sessions />
-                </Route>
-                <Route path="/players">
-                  <PlayersOverview />
-                </Route>
-                <Route>
-                  <NotFound />
-                </Route>
-              </Switch>
-            </ContentWrapper>
-          </ThemeProvider>
-        </Router>
+        <ThemeProvider theme={theme}>
+          <ErrorBoundary>
+            <Router>
+              <IntroDialog />
+              <Analytics />
+              <CssBaseline />
+              <AppBar />
+              <ContentWrapper>
+                <Switch>
+                  <Route exact path={['/', '/summary']}>
+                    <Stats />
+                  </Route>
+                  <Route path="/sessions">
+                    <Sessions />
+                  </Route>
+                  <Route path="/players">
+                    <PlayersOverview />
+                  </Route>
+                  <Route>
+                    <NotFound />
+                  </Route>
+                </Switch>
+              </ContentWrapper>
+            </Router>
+          </ErrorBoundary>
+        </ThemeProvider>
       </PersistGate>
     </Provider>
   );

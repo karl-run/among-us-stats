@@ -32,7 +32,7 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-    GA.event({ category: 'error', action: error.message, label: errorInfo.componentStack });
+    GA.exception({ description: `Error boundary: ${error.message}`, fatal: true });
   }
 
   render(): JSX.Element {
