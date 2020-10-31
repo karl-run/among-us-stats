@@ -1,6 +1,8 @@
 import GA from 'react-ga';
 import { Middleware, PayloadAction } from '@reduxjs/toolkit';
 
+import { reportError } from '../utils/reportError';
+
 import { statsSlice } from './stats/statsRedux';
 
 export const gaMiddleware: Middleware = () => (next) => (action) => {
@@ -17,6 +19,7 @@ export const gaMiddleware: Middleware = () => (next) => (action) => {
       description: `Redux: ${e.message}`,
       fatal: false,
     });
+    reportError('redux', e);
     throw e;
   }
 };
