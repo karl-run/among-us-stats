@@ -315,9 +315,10 @@ function updatePlayerStats(state: StatsState) {
 }
 
 function cleanUpUnusedPlayers(state: StatsState) {
-  const allUsedPlayerIds = state.previousSessions
-    .flatMap((previousSession) => previousSession.players)
-    .map((player) => player.playerId);
+  const allUsedPlayerIds = [
+    ...state.previousSessions.flatMap((previousSession) => previousSession.players),
+    ...state.session.players,
+  ].map((player) => player.playerId);
   const unusedPlayerIds = Object.keys(state.players).filter((playerId) => !allUsedPlayerIds.includes(playerId));
 
   unusedPlayerIds.forEach((unusedPlayerId) => {
