@@ -4,6 +4,7 @@ import { Avatar, Box, Typography } from '@material-ui/core';
 import React, { memo } from 'react';
 import Divider from '@material-ui/core/Divider';
 import Tooltip from '@material-ui/core/Tooltip/Tooltip';
+import { WarningOutlined } from '@material-ui/icons';
 
 import impostor from '../../images/impostor.png';
 import crew from '../../images/crew.png';
@@ -12,7 +13,6 @@ import { percentIt } from '../../utils/mathUtils';
 import { EnhancedPlayer } from '../../store/stats/statsRedux';
 
 import InlineAvatar from './InlineAvatar';
-import { WarningOutlined } from '@material-ui/icons';
 
 const useStyles = makeStyles({
   subtitle: {
