@@ -1,11 +1,12 @@
 import { NowRequest, NowResponse } from '@vercel/node';
 import nodemailer from 'nodemailer';
 
-const sendgridTransport = nodemailer.createTransport({
-  service: "SendGrid",
+const mailtrapTransport = nodemailer.createTransport({
+  host: 'smtp.mailtrap.io',
+  port: 2525,
   auth: {
-    user: process.env.SENDGRID_USERNAME,
-    pass: process.env.SENDGRID_PASSWORD,
+    user: process.env.MAILTRAP_USERNAME,
+    pass: process.env.MAILTRAP_PASSWORD,
   },
 });
 
@@ -28,7 +29,7 @@ export default async (request: NowRequest, response: NowResponse) => {
           <pre>${body.state}</pre>
         </div>`;
 
-  if (process.env.NODE_ENV === 'development' || !process.env.SENDGRID_USERNAME) {
+  if (process.env.NODE_ENV === 'development' || !process.env.MAILTRAP_USERNAME) {
     console.warn('Running in local mode or credentials missing, not sending emails');
     response.status(501).send({
       ok: false,
@@ -40,8 +41,8 @@ export default async (request: NowRequest, response: NowResponse) => {
 
   try {
     console.info('Sending exception email');
-    const info = await sendgridTransport.sendMail({
-      from: '"AUST Error Reporter" <k@rl.run>',
+    const info = await mailtrapTransport.sendMail({
+      from: '"AUST Reporter" <k@rl.run>',
       to: 'k@rl.run',
       subject: `AUST Exception: ${body.message}`,
       html,
