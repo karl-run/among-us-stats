@@ -10,6 +10,7 @@ import Stats from './Stats';
 import AppBar from './AppBar';
 import Sessions from './sessions/Sessions';
 import IntroDialog from './IntroDialog';
+import SettingsDialog from './SettingsDialog';
 import NotFound from './NotFound';
 import Analytics from './Analytics';
 import { theme } from './theme';
@@ -25,6 +26,7 @@ function App(): JSX.Element {
           <ErrorBoundary>
             <Router>
               <IntroDialog />
+              <SettingsDialog />
               <Analytics />
               <CssBaseline />
               <AppBar />

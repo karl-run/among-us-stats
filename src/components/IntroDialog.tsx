@@ -18,7 +18,7 @@ import exampleImage from '../images/example.png';
 import { commonSlice, hasBeenShownIntroKey } from '../store/common/commonRedux';
 import { RootState } from '../store/redux';
 
-import ImpostorIcon from './shared/ImpostorIcon';
+import ImpostorIcon from './shared/icons/ImpostorIcon';
 
 const useStyles = makeStyles((theme) => ({
   fakeCheckbox: {

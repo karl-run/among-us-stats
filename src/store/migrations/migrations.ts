@@ -128,7 +128,7 @@ const migrations: MigrationManifest = {
     console.info('Migrating from 6 to 7, adding timestamps to sessions');
     const persistedState = (state as unknown) as RootState_V6;
 
-    const newState: Omit<RootState, 'common'> = {
+    const newState: Omit<RootState, 'common' | 'settings'> = {
       ...persistedState,
       stats: {
         ...persistedState.stats,

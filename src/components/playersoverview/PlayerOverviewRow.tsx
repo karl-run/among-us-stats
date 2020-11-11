@@ -9,7 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import crew from '../../images/crew.png';
 import impostor from '../../images/impostor.png';
 import { percentIt } from '../../utils/mathUtils';
-import ImpostorIcon from '../shared/ImpostorIcon';
+import ImpostorIcon from '../shared/icons/ImpostorIcon';
 
 import { PlayerStats } from './usePlayerWithTotalStats';
 

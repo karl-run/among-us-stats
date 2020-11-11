@@ -12,6 +12,10 @@ export const gaMiddleware: Middleware = () => (next) => (action) => {
     GA.event({ category: part, action: actionName, label: getLabelFromActionPayload(action) });
   }
 
+  if (part === 'settings') {
+    GA.event({ category: part, action: actionName });
+  }
+
   try {
     next(action);
   } catch (e) {

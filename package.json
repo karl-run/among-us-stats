@@ -19,6 +19,7 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/uuid": "^8.3.0",
     "date-fns": "^2.16.1",
+    "html2canvas": "^1.0.0-rc.7",
     "rambda": "^6.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
