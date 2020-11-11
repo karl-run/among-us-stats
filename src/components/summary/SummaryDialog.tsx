@@ -32,7 +32,7 @@ function SummaryDialog({ open, close }: Props): JSX.Element {
       aria-labelledby="simple-dialog-title"
       open={open}
       fullWidth
-      maxWidth="sm"
+      maxWidth="md"
       fullScreen={isSmallDevice}
     >
       <SummaryCard session={session} noTimestamp />

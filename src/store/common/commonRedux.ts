@@ -6,11 +6,13 @@ export type SortPlayersBy = 'Games played' | 'Total win rate' | 'Impostor win ra
 
 interface CommonState {
   showHelp: boolean;
+  showSettings: boolean;
   sortPlayersBy: SortPlayersBy;
 }
 
 const initialStatsState: CommonState = {
   showHelp: !localStorage.getItem(hasBeenShownIntroKey),
+  showSettings: false,
   sortPlayersBy: 'Games played',
 };
 
@@ -20,6 +22,9 @@ export const commonSlice = createSlice({
   reducers: {
     toggleShowHelp: (state) => {
       state.showHelp = !state.showHelp;
+    },
+    toggleSettings: (state) => {
+      state.showSettings = !state.showSettings;
     },
     sortPlayerBy: (state, action: PayloadAction<CommonState['sortPlayersBy']>) => {
       state.sortPlayersBy = action.payload;
