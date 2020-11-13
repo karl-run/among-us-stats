@@ -11,9 +11,9 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import crew from '../../images/crew.png';
-import impostor from '../../images/impostor.png';
-import { Game, statsSlice } from '../../store/stats/statsRedux';
+import crew from '../../../images/crew.png';
+import impostor from '../../../images/impostor.png';
+import { Game, statsSlice } from '../../../store/stats/statsRedux';
 
 interface Props {
   game: Game;

@@ -9,8 +9,8 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import { makeStyles } from '@material-ui/core/styles';
 import DialogContent from '@material-ui/core/DialogContent/DialogContent';
 
-import { EnhancedPlayer, statsSlice } from '../../store/stats/statsRedux';
-import { percentIt } from '../../utils/mathUtils';
+import { EnhancedPlayer, statsSlice } from '../../../store/stats/statsRedux';
+import { percentIt } from '../../../utils/mathUtils';
 
 interface Props {
   player: EnhancedPlayer;

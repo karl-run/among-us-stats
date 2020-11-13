@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent/DialogContent';
@@ -12,16 +12,23 @@ import Dialog from '@material-ui/core/Dialog';
 import TextField from '@material-ui/core/TextField/TextField';
 import Box from '@material-ui/core/Box';
 import { Check, Close, ExpandMore } from '@material-ui/icons';
+import GA from 'react-ga';
 
-import { commonSlice } from '../store/common/commonRedux';
-import { RootState } from '../store/redux';
-import { settingsSlice } from '../store/settings/settingsRedux';
+import { commonSlice } from '../../store/common/commonRedux';
+import { RootState } from '../../store/redux';
+import { settingsSlice } from '../../store/settings/settingsRedux';
 
 function SettingsDialog(): JSX.Element | null {
   const dispatch = useDispatch();
   const shouldShow = useSelector((state: RootState) => state.common.showSettings);
   const settings = useSelector((state: RootState) => state.settings);
   const [testResult, setTestResult] = useState<'untested' | 'good' | 'bad'>('untested');
+
+  useEffect(() => {
+    if (shouldShow) {
+      GA.event({ category: 'View', action: 'settingsDialog' });
+    }
+  }, [shouldShow]);
 
   const handleClose = () => {
     dispatch(commonSlice.actions.toggleSettings());
@@ -47,12 +54,15 @@ function SettingsDialog(): JSX.Element | null {
       });
 
       if (result.status < 299) {
+        GA.event({ category: 'Social', action: 'testDiscordWebhook', label: 'hook-good' });
         setTestResult('good');
       } else {
+        GA.event({ category: 'Social', action: 'testDiscordWebhook', label: 'hook-bad-response' });
         setTestResult('bad');
       }
     } catch (e) {
       console.error(e);
+      GA.event({ category: 'Social', action: 'testDiscordWebhook', label: 'hook-bad-request' });
       setTestResult('bad');
     }
   };

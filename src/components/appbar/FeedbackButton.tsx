@@ -12,8 +12,8 @@ import { Email, GitHub } from '@material-ui/icons';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 
-import useBoolean from './shared/hooks/useBoolean';
-import BreakpointButton from './shared/BreakpointButton';
+import useBoolean from '../shared/hooks/useBoolean';
+import BreakpointButton from '../shared/BreakpointButton';
 
 function FeedbackButton(): JSX.Element {
   const [isOpen, actions] = useBoolean();

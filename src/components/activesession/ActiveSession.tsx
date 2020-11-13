@@ -3,7 +3,7 @@ import React from 'react';
 import TableContainer from './table/TableContainer';
 import Footer from './Footer';
 
-const Stats = (): JSX.Element => {
+const ActiveSession = (): JSX.Element => {
   return (
     <>
       <TableContainer />
@@ -12,4 +12,4 @@ const Stats = (): JSX.Element => {
   );
 };
 
-export default Stats;
+export default ActiveSession;

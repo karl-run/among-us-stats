@@ -3,7 +3,7 @@ import GA from 'react-ga';
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
 
-import { EnhancedPlayer, Session } from '../../../store/stats/statsRedux';
+import { EnhancedPlayer, Session } from '../../../../store/stats/statsRedux';
 
 import NewPlayerDialog from './NewPlayerDialog';
 

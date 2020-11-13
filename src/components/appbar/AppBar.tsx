@@ -15,11 +15,11 @@ import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem/MenuItem';
 
-import { statsSlice } from '../store/stats/statsRedux';
-import crew from '../images/crew.png';
-import { commonSlice } from '../store/common/commonRedux';
+import { statsSlice } from '../../store/stats/statsRedux';
+import crew from '../../images/crew.png';
+import { commonSlice } from '../../store/common/commonRedux';
+import BreakpointButton from '../shared/BreakpointButton';
 
-import BreakpointButton from './shared/BreakpointButton';
 import FeedbackButton from './FeedbackButton';
 
 const useStyles = makeStyles((theme) => ({

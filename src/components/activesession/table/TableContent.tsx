@@ -9,7 +9,7 @@ import TableBody from '@material-ui/core/TableBody';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
-import { EnhancedPlayer, Session } from '../../store/stats/statsRedux';
+import { EnhancedPlayer, Session } from '../../../store/stats/statsRedux';
 
 import CompleteGameButton from './CompleteGameButton';
 import NewPlayerButton from './addplayer/NewPlayerButton';

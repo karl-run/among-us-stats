@@ -8,10 +8,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Tooltip from '@material-ui/core/Tooltip';
 import Checkbox from '@material-ui/core/Checkbox';
 
-import { textOverflow } from '../../utils/stringUtils';
-import { EnhancedPlayer, Session, statsSlice } from '../../store/stats/statsRedux';
-import ImpostorIcon from '../shared/icons/ImpostorIcon';
-import { percentIt } from '../../utils/mathUtils';
+import { textOverflow } from '../../../utils/stringUtils';
+import { EnhancedPlayer, Session, statsSlice } from '../../../store/stats/statsRedux';
+import ImpostorIcon from '../../shared/icons/ImpostorIcon';
+import { percentIt } from '../../../utils/mathUtils';
 
 import PlayerAvatar from './PlayerAvatar';
 

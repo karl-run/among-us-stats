@@ -3,7 +3,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 
-import { Player, UUID } from '../../../store/stats/statsRedux';
+import { Player, UUID } from '../../../../store/stats/statsRedux';
 
 const filter = createFilterOptions<AutoCompleteOption>();
 

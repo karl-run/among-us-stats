@@ -7,9 +7,9 @@ import WarningOutlined from '@material-ui/icons/WarningOutlined';
 import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
 
-import IconInfoText from '../../shared/IconInfoText';
-import { EnhancedPlayer, Session, statsSlice, UUID } from '../../../store/stats/statsRedux';
-import { getPlayers } from '../../../store/stats/statsSelectors';
+import IconInfoText from '../../../shared/IconInfoText';
+import { EnhancedPlayer, Session, statsSlice, UUID } from '../../../../store/stats/statsRedux';
+import { getPlayers } from '../../../../store/stats/statsSelectors';
 
 import AutoCompletePlayerInput, { PlayerOption } from './AutoCompletePlayerInput';
 

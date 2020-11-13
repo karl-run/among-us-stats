@@ -1,8 +1,8 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
 
-import { Session } from '../../store/stats/statsRedux';
-import Scoreboard from '../shared/Scoreboard';
+import { Session } from '../../../store/stats/statsRedux';
+import Scoreboard from '../../shared/Scoreboard';
 
 interface Props {
   session: Session;

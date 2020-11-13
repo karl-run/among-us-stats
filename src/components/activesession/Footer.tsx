@@ -3,7 +3,7 @@ import Box from '@material-ui/core/Box';
 import InfoIcon from '@material-ui/icons/Info';
 import { makeStyles } from '@material-ui/core/styles';
 
-import IconInfoText from './shared/IconInfoText';
+import IconInfoText from '../shared/IconInfoText';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
