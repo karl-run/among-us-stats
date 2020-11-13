@@ -56,12 +56,7 @@ function IntroDialog(): JSX.Element | null {
   }
 
   return (
-    <Dialog
-      open
-      onClose={() => {
-        dispatch(commonSlice.actions.toggleShowHelp());
-      }}
-    >
+    <Dialog open onClose={handleClose}>
       <DialogTitle>Welcome!</DialogTitle>
       <DialogContent>
         <DialogContentText>

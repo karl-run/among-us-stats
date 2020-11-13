@@ -8,8 +8,6 @@ import TableContent from './TableContent';
 import TableToolbar from './TableToolbar';
 import TableFooter from './TableFooter';
 
-TableContainer.propTypes = {};
-
 function TableContainer(): JSX.Element {
   const session = useSelector(getSession);
 

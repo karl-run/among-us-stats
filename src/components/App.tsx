@@ -12,6 +12,7 @@ import PlayersOverview from './playersoverview/PlayersOverview';
 import Sessions from './sessions/Sessions';
 import IntroDialog from './dialogs/IntroDialog';
 import SettingsDialog from './dialogs/SettingsDialog';
+import FeedbackDialog from './dialogs/FeedbackDialog';
 import NotFound from './NotFound';
 import Analytics from './Analytics';
 import { theme } from './theme';
@@ -27,6 +28,7 @@ function App(): JSX.Element {
             <Router>
               <IntroDialog />
               <SettingsDialog />
+              <FeedbackDialog />
               <Analytics />
               <CssBaseline />
               <AppBar />

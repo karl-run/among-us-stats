@@ -13,10 +13,12 @@ import TextField from '@material-ui/core/TextField/TextField';
 import Box from '@material-ui/core/Box';
 import { Check, Close, ExpandMore } from '@material-ui/icons';
 import GA from 'react-ga';
+import Badge from '@material-ui/core/Badge';
 
-import { commonSlice } from '../../store/common/commonRedux';
+import { commonSlice, hasVisitedSettingsKey } from '../../store/common/commonRedux';
 import { RootState } from '../../store/redux';
 import { settingsSlice } from '../../store/settings/settingsRedux';
+import DiscordIcon from '../shared/icons/DiscordIcon';
 
 function SettingsDialog(): JSX.Element | null {
   const dispatch = useDispatch();
@@ -26,6 +28,7 @@ function SettingsDialog(): JSX.Element | null {
 
   useEffect(() => {
     if (shouldShow) {
+      localStorage.setItem(hasVisitedSettingsKey, 'true');
       GA.event({ category: 'View', action: 'settingsDialog' });
     }
   }, [shouldShow]);
@@ -77,7 +80,15 @@ function SettingsDialog(): JSX.Element | null {
     >
       <DialogTitle>Settings</DialogTitle>
       <DialogContent>
-        <Typography variant="h6">Discord integration</Typography>
+        <Box display="flex" alignItems="center">
+          <Badge variant="dot" color="secondary" invisible={!!localStorage.getItem(hasVisitedSettingsKey)}>
+            <DiscordIcon />
+          </Badge>
+
+          <Box pl={1}>
+            <Typography variant="h6">New feature: Discord integration</Typography>
+          </Box>
+        </Box>
         <DialogContentText>
           If you configure a Discord webhook URL you will be able to share the score directly from the summary card.
         </DialogContentText>

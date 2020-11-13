@@ -6,16 +6,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import Avatar from '@material-ui/core/Avatar/Avatar';
 import Hidden from '@material-ui/core/Hidden';
 
 import { statsSlice } from '../../store/stats/statsRedux';
 import crew from '../../images/crew.png';
-import { commonSlice } from '../../store/common/commonRedux';
 import BreakpointButton from '../shared/BreakpointButton';
 
-import FeedbackButton from './FeedbackButton';
 import { KebabMenu } from './KebabMenu';
 
 const useStyles = makeStyles((theme) => ({
@@ -62,15 +59,6 @@ function AppBar(): JSX.Element {
           label="Start a new session"
           onClick={() => {
             dispatch(statsSlice.actions.newSession());
-          }}
-        />
-        <FeedbackButton />
-        <BreakpointButton
-          text="Help"
-          endIcon={<HelpOutlineIcon />}
-          label="Open help dialog"
-          onClick={() => {
-            dispatch(commonSlice.actions.toggleShowHelp());
           }}
         />
         <KebabMenu />

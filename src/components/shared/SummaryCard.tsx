@@ -36,6 +36,9 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: theme.spacing(2),
     },
   },
+  shareButtonPlaceholder: {
+    minWidth: theme.spacing(12),
+  },
   gamesPlayed: {
     position: 'absolute',
     bottom: 0,
@@ -58,6 +61,7 @@ function SummaryCard({ session, extraActions, noTimestamp = false }: Props): JSX
   const classes = useStyles();
   const summaryCardRef = useRef<HTMLDivElement>(null);
   const settings = useSelector((state: RootState) => state.settings);
+  const showDiscordShareButton = settings.discordShareWebhook && !extraActions;
 
   const playersByWinRate = [...session.players].sort((a, b) => b.winRates.total - a.winRates.total);
   const unfinishedGames = session.games.filter((it) => it.winner == null).length;
@@ -71,6 +75,7 @@ function SummaryCard({ session, extraActions, noTimestamp = false }: Props): JSX
             <EditableTitle session={session} />
             <Box className={classes.autoPad} />
             <Box className={classes.optionalActions}>{extraActions}</Box>
+            {showDiscordShareButton && <Box className={classes.shareButtonPlaceholder} />}
           </Box>
           {unfinishedGames > 0 && (
             <Box m={2}>
@@ -108,7 +113,7 @@ function SummaryCard({ session, extraActions, noTimestamp = false }: Props): JSX
         </Box>
       </div>
       <Suspense fallback={null}>
-        {settings.discordShareWebhook && !extraActions && <LazyDiscordShareButton shareBoxRef={summaryCardRef} />}
+        {showDiscordShareButton && <LazyDiscordShareButton shareBoxRef={summaryCardRef} />}
       </Suspense>
     </div>
   );

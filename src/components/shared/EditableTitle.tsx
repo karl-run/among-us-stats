@@ -42,8 +42,9 @@ function EditableTitle({ session, variant = 'h6' }: Props): JSX.Element {
 
   if (edit) {
     return (
-      <ClickAwayListener onClickAway={handleSave}>
+      <ClickAwayListener onClickAway={handleSave} mouseEvent="onMouseDown">
         <TextField
+          data-testid="edit-session-name"
           value={value}
           onChange={handleOnChange}
           onBlur={handleSave}
