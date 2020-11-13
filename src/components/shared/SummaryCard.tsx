@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, Suspense } from 'react';
 import GamepadIcon from '@material-ui/icons/Gamepad';
 import Paper from '@material-ui/core/Paper';
 import WarningIcon from '@material-ui/icons/Warning';
@@ -17,7 +17,8 @@ import PlayerStatsItem from './PlayerStatsItem';
 import IconInfoText from './IconInfoText';
 import Scoreboard from './Scoreboard';
 import EditableTitle from './EditableTitle';
-import DiscordShareButton from './DiscordShareButton';
+
+const LazyDiscordShareButton = React.lazy(() => import('./DiscordShareButton'));
 
 const useStyles = makeStyles((theme) => ({
   rootBox: {
@@ -106,7 +107,9 @@ function SummaryCard({ session, extraActions, noTimestamp = false }: Props): JSX
           )}
         </Box>
       </div>
-      {settings.discordShareWebhook && !extraActions && <DiscordShareButton shareBoxRef={summaryCardRef} />}
+      <Suspense fallback={null}>
+        {settings.discordShareWebhook && !extraActions && <LazyDiscordShareButton shareBoxRef={summaryCardRef} />}
+      </Suspense>
     </div>
   );
 }
