@@ -5,12 +5,12 @@ import Paper from '@material-ui/core/Paper/Paper';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-import Avatar from '@material-ui/core/Avatar';
 import WarningIcon from '@material-ui/icons/Warning';
 import Button from '@material-ui/core/Button';
 
 import { reportError } from '../utils/reportError';
-import impostor from '../images/impostor.png';
+
+import CrewAvatar from './shared/avatar/CrewAvatar';
 
 interface Props {
   children: JSX.Element;
@@ -46,7 +46,7 @@ class ErrorBoundary extends Component<Props, State> {
             <Box p={2}>
               <Box display="flex" mb={2} alignItems="center" justifyContent="center">
                 <Box mr={2}>
-                  <Avatar src={impostor} />
+                  <CrewAvatar type="impostor" />
                 </Box>
                 <Typography variant="h5">Seems we have an impostor among us. Something went terribly wrong.</Typography>
               </Box>

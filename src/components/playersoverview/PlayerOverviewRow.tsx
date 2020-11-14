@@ -6,10 +6,9 @@ import Typography from '@material-ui/core/Typography';
 import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
 import { makeStyles } from '@material-ui/core/styles';
 
-import crew from '../../images/crew.png';
-import impostor from '../../images/impostor.png';
 import { percentIt } from '../../utils/mathUtils';
 import ImpostorIcon from '../shared/icons/ImpostorIcon';
+import CrewAvatar from '../shared/avatar/CrewAvatar';
 
 import { PlayerStats } from './usePlayerWithTotalStats';
 
@@ -52,11 +51,15 @@ function PlayerOverviewRow({ player }: Props): JSX.Element {
         text={percentIt(player.totalWinRate)}
       />
       <StatItem
-        icon={<Avatar src={impostor} />}
+        icon={<CrewAvatar type="impostor" />}
         title="Impostor win rate"
         text={percentIt(player.totalImpostorWinRate)}
       />
-      <StatItem icon={<Avatar src={crew} />} title="Crew win rate" text={percentIt(player.totalCrewWinRate)} />
+      <StatItem
+        icon={<CrewAvatar type="crew" />}
+        title="CrewAvatar win rate"
+        text={percentIt(player.totalCrewWinRate)}
+      />
       <StatItem
         icon={
           <Avatar className={classes.impostorRateAvatar}>

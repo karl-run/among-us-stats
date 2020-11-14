@@ -11,9 +11,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import crew from '../../../images/crew.png';
-import impostor from '../../../images/impostor.png';
 import { Game, statsSlice } from '../../../store/stats/statsRedux';
+import CrewAvatar from '../../shared/avatar/CrewAvatar';
 
 interface Props {
   game: Game;
@@ -42,8 +41,7 @@ function CompleteGameButton({ game, focusAndWarn }: Props): JSX.Element {
             autoFocus={focusAndWarn}
             color={focusAndWarn ? 'secondary' : 'default'}
           >
-            {game.winner === 'impostor' && <Avatar src={impostor} />}
-            {game.winner === 'crew' && <Avatar src={crew} />}
+            {game.winner != null && <CrewAvatar type={game.winner} />}
             {game.winner === null && <DoneIcon />}
           </IconButton>
         </Tooltip>
@@ -66,7 +64,7 @@ function CompleteGameButton({ game, focusAndWarn }: Props): JSX.Element {
               }}
             >
               <ListItemAvatar>
-                <Avatar src={impostor} />
+                <CrewAvatar type="impostor" />
               </ListItemAvatar>
               <ListItemText primary="Impostor" />
             </ListItem>
@@ -84,7 +82,7 @@ function CompleteGameButton({ game, focusAndWarn }: Props): JSX.Element {
               }}
             >
               <ListItemAvatar>
-                <Avatar src={crew} />
+                <CrewAvatar type="crew" />
               </ListItemAvatar>
               <ListItemText primary="Crewmates" />
             </ListItem>

@@ -14,10 +14,11 @@ import AddIcon from '@material-ui/icons/PlusOne';
 import IconButton from '@material-ui/core/IconButton';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
-import exampleImage from '../../images/example.png';
 import { commonSlice, hasBeenShownIntroKey } from '../../store/common/commonRedux';
 import { RootState } from '../../store/redux';
 import ImpostorIcon from '../shared/icons/ImpostorIcon';
+
+import exampleImage from './example.png';
 
 const useStyles = makeStyles((theme) => ({
   fakeCheckbox: {

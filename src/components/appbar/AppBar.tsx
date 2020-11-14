@@ -6,12 +6,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import Avatar from '@material-ui/core/Avatar/Avatar';
 import Hidden from '@material-ui/core/Hidden';
 
 import { statsSlice } from '../../store/stats/statsRedux';
-import crew from '../../images/crew.png';
 import BreakpointButton from '../shared/BreakpointButton';
+import CrewAvatar from '../shared/avatar/CrewAvatar';
 
 import { KebabMenu } from './KebabMenu';
 
@@ -41,7 +40,7 @@ function AppBar(): JSX.Element {
     <MuiAppBar position="static">
       <Toolbar>
         <Link to="/">
-          <Avatar src={crew} className={classes.logo} />
+          <CrewAvatar type="impostor" className={classes.logo} />
         </Link>
         <Hidden smDown>
           <Typography variant="h6" className={classes.title}>

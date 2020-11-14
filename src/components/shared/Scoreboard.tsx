@@ -1,12 +1,12 @@
 import React from 'react';
-import { Avatar, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import Box from '@material-ui/core/Box/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import Hidden from '@material-ui/core/Hidden';
 
 import { Session } from '../../store/stats/statsRedux';
-import impostor from '../../images/impostor.png';
-import crew from '../../images/crew.png';
+
+import CrewAvatar from './avatar/CrewAvatar';
 
 interface Props {
   session: Session;
@@ -42,7 +42,7 @@ function Scoreboard({ session }: Props): JSX.Element {
           <Typography variant="h5">Impostors</Typography>
         </Hidden>
         <Box m={1}>
-          <Avatar src={impostor} className={classes.impostorIcon} />
+          <CrewAvatar type="impostor" className={classes.impostorIcon} />
         </Box>
       </Box>
       <Box>
@@ -55,7 +55,7 @@ function Scoreboard({ session }: Props): JSX.Element {
       </Box>
       <Box className={classes.scoreBox} alignSelf="flex-end">
         <Box m={1}>
-          <Avatar src={crew} />
+          <CrewAvatar type="crew" />
         </Box>
         <Hidden xsDown>
           <Typography variant="h5">Crewmates</Typography>

@@ -6,13 +6,11 @@ import Divider from '@material-ui/core/Divider';
 import Tooltip from '@material-ui/core/Tooltip/Tooltip';
 import { WarningOutlined } from '@material-ui/icons';
 
-import impostor from '../../images/impostor.png';
-import crew from '../../images/crew.png';
 import { textOverflow } from '../../utils/stringUtils';
 import { percentIt } from '../../utils/mathUtils';
 import { EnhancedPlayer } from '../../store/stats/statsRedux';
 
-import InlineAvatar from './InlineAvatar';
+import CrewAvatar from './avatar/CrewAvatar';
 
 const useStyles = makeStyles({
   subtitle: {
@@ -57,9 +55,9 @@ function PlayerStatsItem({ player, placement }: Props): JSX.Element {
         <Grid item xs={8}>
           <Tooltip title="Win rate as specific role">
             <Typography variant="subtitle2" className={classes.subtitle}>
-              <InlineAvatar src={impostor} />
+              <CrewAvatar type="impostor" inline />
               {percentIt(player.winRates.impostor)}
-              <InlineAvatar src={crew} />
+              <CrewAvatar type="crew" inline />
               {percentIt(player.winRates.crew)}
             </Typography>
           </Tooltip>
