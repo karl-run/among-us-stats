@@ -1,4 +1,4 @@
-import { NowRequest, NowResponse } from '@vercel/node';
+import { NextApiRequest, NextApiResponse } from 'next';
 import nodemailer from 'nodemailer';
 
 const mailtrapTransport = nodemailer.createTransport({
@@ -17,7 +17,7 @@ interface RequestBody {
   state?: string | null;
 }
 
-export default async (request: NowRequest, response: NowResponse) => {
+export default async (request: NextApiRequest, response: NextApiResponse) => {
   const body: RequestBody = JSON.parse(request.body);
   const error: Error = JSON.parse(body.exception);
 

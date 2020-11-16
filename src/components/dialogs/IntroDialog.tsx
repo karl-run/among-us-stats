@@ -18,8 +18,6 @@ import { commonSlice, hasBeenShownIntroKey } from '../../store/common/commonRedu
 import { RootState } from '../../store/redux';
 import ImpostorIcon from '../shared/icons/ImpostorIcon';
 
-import exampleImage from './example.png';
-
 const useStyles = makeStyles((theme) => ({
   fakeCheckbox: {
     height: theme.spacing(1),
@@ -84,7 +82,7 @@ function IntroDialog(): JSX.Element | null {
           -button. Then {`you'll`} get a scorecard like this, that lists your win rates, impostor rate and win rate as a
           specific role.
         </DialogContentText>
-        <img src={exampleImage} alt="example scoreboard" className={classes.exampleImage} />
+        <img src="/example.png" alt="example scoreboard" className={classes.exampleImage} />
         <DialogContentText>
           To start a new gaming session, hit the New Session{' '}
           <IconButton className={classes.fakeButton} size="small">

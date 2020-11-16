@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -15,15 +14,16 @@ import { getPreviousSessions } from '../../store/stats/statsSelectors';
 import { byDate } from '../../utils/dateUtils';
 
 import DeleteSessionButton from './DeleteSessionButton';
+import { useRouter } from 'next/router';
 
 function Sessions(): JSX.Element {
   const dispatch = useDispatch();
   const previous = useSelector(getPreviousSessions);
-  const history = useHistory();
+  const router = useRouter();
 
-  const createHandleSwapClick = (sessionId: string) => () => {
+  const createHandleSwapClick = (sessionId: string) => async () => {
     dispatch(statsSlice.actions.swapSession({ sessionId }));
-    history.push('/');
+    await router.push('/');
   };
 
   return (

@@ -1,9 +1,7 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar, { AvatarProps } from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
-
-import impostorImage from './impostor.png';
 
 interface Props extends Omit<AvatarProps, 'src' | 'alt'> {
   type: 'crew' | 'impostor';
@@ -25,26 +23,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CrewAvatar = ({ type, inline, className, ...rest }: Props): JSX.Element => {
-  const classes = useStyles();
+const CrewAvatar = forwardRef(
+  ({ type, inline, className, ...rest }: Props, ref): JSX.Element => {
+    const classes = useStyles();
 
-  const avatar = (
-    <Avatar
-      src={impostorImage}
-      className={`${className} ${inline ? classes.inline : ''}`}
-      classes={{
-        img: `${type === 'crew' ? classes.crew : ''}`,
-      }}
-      alt={`avatar of ${type}`}
-      {...rest}
-    />
-  );
+    const avatar = (
+      <Avatar
+        ref={ref}
+        src="/impostor.png"
+        className={`${className} ${inline ? classes.inline : ''}`}
+        classes={{
+          img: `${type === 'crew' ? classes.crew : ''}`,
+        }}
+        alt={`avatar of ${type}`}
+        {...rest}
+      />
+    );
 
-  if (!inline) {
-    return avatar;
-  }
+    if (!inline) {
+      return avatar;
+    }
 
-  return <Box className={classes.inlineRoot}>{avatar}</Box>;
-};
+    return <Box className={classes.inlineRoot}>{avatar}</Box>;
+  },
+);
 
 export default CrewAvatar;

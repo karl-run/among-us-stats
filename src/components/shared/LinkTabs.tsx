@@ -1,6 +1,6 @@
 import Tab from '@material-ui/core/Tab';
 import React from 'react';
-import { Link, LinkProps } from 'react-router-dom';
+import Link, { LinkProps } from 'next/link';
 
 interface LinkTabProps {
   label: string;
@@ -8,7 +8,11 @@ interface LinkTabProps {
 }
 
 function LinkTab({ to, label }: LinkTabProps): JSX.Element {
-  return <Tab component={Link} to={to} label={label} />;
+  return (
+    <Link href={to} passHref>
+      <Tab label={label} />
+    </Link>
+  );
 }
 
 export default LinkTab;

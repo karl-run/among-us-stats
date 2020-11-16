@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
 import ReactGA from 'react-ga';
-import { useLocation } from 'react-router-dom';
+import { useRouter } from 'next/router';
 
 function Analytics(): null {
-  const location = useLocation();
+  const router = useRouter();
+  const location = router.pathname;
 
   useEffect(() => {
-    ReactGA.initialize(process.env.REACT_APP_GA_CODE ?? 'no-code', {
+    ReactGA.initialize(process.env.REACT_APP_GA_CODE?.toString() ?? 'no-code', {
       debug: !process.env.REACT_APP_GA_CODE,
     });
     ReactGA.pageview(window.location.pathname + window.location.search);

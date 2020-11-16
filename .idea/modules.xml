@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/game-stat-tracker.iml" filepath="$PROJECT_DIR$/.idea/game-stat-tracker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/aust.iml" filepath="$PROJECT_DIR$/.idea/aust.iml" />
     </modules>
   </component>
 </project>

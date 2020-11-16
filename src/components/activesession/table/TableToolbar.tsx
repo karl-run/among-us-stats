@@ -1,16 +1,17 @@
 import React from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
 import Toolbar from '@material-ui/core/Toolbar';
 import { Box } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/PlusOne';
 import GamepadIcon from '@material-ui/icons/Gamepad';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 
 import SummaryDialog from '../../summary/SummaryDialog';
 import { Session, statsSlice } from '../../../store/stats/statsRedux';
 import BreakpointButton from '../../shared/BreakpointButton';
 import EditableTitle from '../../shared/EditableTitle';
+import { commonSlice } from '../../../store/common/commonRedux';
+import { RootState } from '../../../store/redux';
 
 const useStyles = makeStyles({
   title: {
@@ -38,8 +39,7 @@ interface Props {
 function TableToolbar({ session }: Props): JSX.Element {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const history = useHistory();
-  const location = useLocation();
+  const showSummary = useSelector((state: RootState) => state.common.showSummary);
 
   return (
     <>
@@ -53,7 +53,7 @@ function TableToolbar({ session }: Props): JSX.Element {
           endIcon={<GamepadIcon />}
           label="View scoreboard"
           onClick={() => {
-            history.push('/summary');
+            dispatch(commonSlice.actions.toggleSummary());
           }}
         />
         <BreakpointButton
@@ -67,9 +67,9 @@ function TableToolbar({ session }: Props): JSX.Element {
         />
       </Toolbar>
       <SummaryDialog
-        open={location.pathname === '/summary'}
+        open={showSummary}
         close={() => {
-          history.push('/');
+          dispatch(commonSlice.actions.toggleSummary());
         }}
       />
     </>

@@ -34,7 +34,11 @@ export function KebabMenu(): JSX.Element {
     <>
       <Tooltip title="Settings">
         <IconButton aria-label="Settings" onClick={handleClick}>
-          <Badge variant="dot" color="secondary" invisible={!!localStorage.getItem(hasVisitedSettingsKey)}>
+          <Badge
+            variant="dot"
+            color="secondary"
+            invisible={typeof window !== 'undefined' ? !!localStorage.getItem(hasVisitedSettingsKey) : false}
+          >
             <MoreVertIcon />
           </Badge>
         </IconButton>
@@ -78,7 +82,11 @@ export function KebabMenu(): JSX.Element {
           }}
         >
           <ListItemIcon>
-            <Badge variant="dot" color="secondary" invisible={!!localStorage.getItem(hasVisitedSettingsKey)}>
+            <Badge
+              variant="dot"
+              color="secondary"
+              invisible={typeof window !== 'undefined' ? !!localStorage.getItem(hasVisitedSettingsKey) : false}
+            >
               <SettingsIcon />
             </Badge>
           </ListItemIcon>

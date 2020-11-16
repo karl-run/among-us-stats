@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import { useLocation } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import Tabs from '@material-ui/core/Tabs';
 import Box from '@material-ui/core/Box';
@@ -8,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { getPlayers } from '../store/stats/statsSelectors';
 
 import LinkTab from './shared/LinkTabs';
+import { useRouter } from 'next/router';
 
 interface Props {
   children: ReactNode;
@@ -20,7 +20,8 @@ const getIndex = (path: string): number =>
 
 function ContentWrapper({ children }: Props): JSX.Element {
   const hasPlayers = useSelector(getPlayers).length > 0;
-  const { pathname } = useLocation();
+  const router = useRouter();
+  const { pathname } = router;
 
   return (
     <Container maxWidth="xl">

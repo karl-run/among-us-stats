@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
 import MuiAppBar from '@material-ui/core/AppBar';
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -13,13 +12,17 @@ import BreakpointButton from '../shared/BreakpointButton';
 import CrewAvatar from '../shared/avatar/CrewAvatar';
 
 import { KebabMenu } from './KebabMenu';
+import Link from 'next/link';
+import { IconButton } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  logo: {
+  logoButton: {
     marginRight: theme.spacing(2),
+  },
+  logo: {
     filter: 'hue-rotate(180deg)',
     animation: '$hue-animation 15s linear infinite',
   },
@@ -34,13 +37,15 @@ const useStyles = makeStyles((theme) => ({
 
 function AppBar(): JSX.Element {
   const classes = useStyles();
-
   const dispatch = useDispatch();
+
   return (
     <MuiAppBar position="static">
       <Toolbar>
-        <Link to="/">
-          <CrewAvatar type="impostor" className={classes.logo} />
+        <Link href="/" passHref>
+          <IconButton className={classes.logoButton}>
+            <CrewAvatar type="impostor" className={classes.logo} />
+          </IconButton>
         </Link>
         <Hidden smDown>
           <Typography variant="h6" className={classes.title}>

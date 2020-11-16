@@ -9,13 +9,15 @@ interface CommonState {
   showHelp: boolean;
   showSettings: boolean;
   showFeedback: boolean;
+  showSummary: boolean;
   sortPlayersBy: SortPlayersBy;
 }
 
 const initialStatsState: CommonState = {
-  showHelp: !localStorage.getItem(hasBeenShownIntroKey),
+  showHelp: typeof window !== 'undefined' ? !localStorage.getItem(hasBeenShownIntroKey) : true,
   showSettings: false,
   showFeedback: false,
+  showSummary: false,
   sortPlayersBy: 'Games played',
 };
 
@@ -31,6 +33,9 @@ export const commonSlice = createSlice({
     },
     toggleSettings: (state) => {
       state.showSettings = !state.showSettings;
+    },
+    toggleSummary: (state) => {
+      state.showSummary = !state.showSummary;
     },
     sortPlayerBy: (state, action: PayloadAction<CommonState['sortPlayersBy']>) => {
       state.sortPlayersBy = action.payload;
