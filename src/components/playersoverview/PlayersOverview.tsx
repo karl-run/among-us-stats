@@ -10,7 +10,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { sortBy } from 'rambda';
+import { sortBy, reverse } from 'rambda';
 
 import useAnchor from '../shared/hooks/useAnchor';
 import { RootState } from '../../store/redux';
@@ -33,20 +33,23 @@ function PlayersOverview(): JSX.Element {
   const [anchorEl, anchorActions] = useAnchor();
   const sortPlayersBy = useSelector((state: RootState) => state.common.sortPlayersBy);
   const [playersWithTotalStats, metaStats] = usePlayersWithTotalStats();
-  const playersWithTotalStatsSorted = sortBy((player) => {
-    switch (sortPlayersBy) {
-      case 'Games played':
-        return player.gamesPlayed;
-      case 'Total win rate':
-        return player.totalWinRate;
-      case 'Impostor win rate':
-        return player.totalImpostorWinRate;
-      case 'Crew win rate':
-        return player.totalCrewWinRate;
-      case 'Impostor rate':
-        return player.totalImpostorRate;
-    }
-  }, playersWithTotalStats).reverse();
+
+  const playersWithTotalStatsSorted = reverse(
+    sortBy((player) => {
+      switch (sortPlayersBy) {
+        case 'Games played':
+          return player.gamesPlayed;
+        case 'Total win rate':
+          return player.totalWinRate;
+        case 'Impostor win rate':
+          return player.totalImpostorWinRate;
+        case 'Crew win rate':
+          return player.totalCrewWinRate;
+        case 'Impostor rate':
+          return player.totalImpostorRate;
+      }
+    })(playersWithTotalStats),
+  );
 
   return (
     <Paper>

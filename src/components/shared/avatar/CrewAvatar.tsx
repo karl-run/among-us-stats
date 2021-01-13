@@ -4,6 +4,7 @@ import Avatar, { AvatarProps } from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 
 import impostorImage from './impostor.png';
+import crewImage from './crew.png';
 
 interface Props extends Omit<AvatarProps, 'src' | 'alt'> {
   type: 'crew' | 'impostor';
@@ -11,9 +12,6 @@ interface Props extends Omit<AvatarProps, 'src' | 'alt'> {
 }
 
 const useStyles = makeStyles((theme) => ({
-  crew: {
-    filter: 'hue-rotate(154deg) brightness(1.3) saturate(1.7)',
-  },
   inlineRoot: {
     display: 'inline-flex',
     padding: theme.spacing(0.5),
@@ -30,11 +28,8 @@ const CrewAvatar = ({ type, inline, className, ...rest }: Props): JSX.Element =>
 
   const avatar = (
     <Avatar
-      src={impostorImage}
+      src={type === 'crew' ? crewImage : impostorImage}
       className={`${className} ${inline ? classes.inline : ''}`}
-      classes={{
-        img: `${type === 'crew' ? classes.crew : ''}`,
-      }}
       alt={`avatar of ${type}`}
       {...rest}
     />
