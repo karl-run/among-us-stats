@@ -64,4 +64,50 @@ describe('statsRedux', () => {
       ]);
     });
   });
+
+  describe('deleteGame', () => {
+    it('should delete only the game with the provided gameId', () => {
+      const store = setupStore({
+        stats: {
+          ...initialStatsState,
+          players: testPlayers,
+          session: {
+            ...initialStatsState.session,
+            players: createSessionPlayers(testPlayers),
+            games: [
+              { ...initialStatsState.session.games[0], gameId: 'game-1-id' },
+              { ...initialStatsState.session.games[0], gameId: 'game-2-id' },
+              { ...initialStatsState.session.games[0], gameId: 'game-3-id' },
+            ],
+          },
+        },
+      });
+
+      store.dispatch(statsSlice.actions.deleteGame('game-2-id'));
+
+      const result = store.getState().stats;
+
+      expect(result.session.games).toHaveLength(2);
+      expect(result.session.games[0].gameId).toEqual('game-1-id');
+      expect(result.session.games[1].gameId).toEqual('game-3-id');
+    });
+
+    it('should throw error if provided gameId does not exist', () => {
+      const store = setupStore({
+        stats: {
+          ...initialStatsState,
+          players: testPlayers,
+          session: {
+            ...initialStatsState.session,
+            players: createSessionPlayers(testPlayers),
+            games: [{ ...initialStatsState.session.games[0], gameId: 'game-1-id' }],
+          },
+        },
+      });
+
+      const action = () => store.dispatch(statsSlice.actions.deleteGame('game-2-id'));
+
+      expect(action).toThrow('No game with gameId game-2-id was found');
+    });
+  });
 });

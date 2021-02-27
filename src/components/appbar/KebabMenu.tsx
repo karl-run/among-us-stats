@@ -14,26 +14,19 @@ import Badge from '@material-ui/core/Badge';
 
 import { commonSlice, hasVisitedSettingsKey } from '../../store/common/commonRedux';
 import { RootState } from '../../store/redux';
+import useAnchor from '../shared/hooks/useAnchor';
 
 export function KebabMenu(): JSX.Element {
   const dispatch = useDispatch();
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, anchorActions] = useAnchor();
 
   // Small hack to force this menu to re-render so that the dot disappears whe first time someone opens settings
   useSelector((state: RootState) => state.common.showSettings);
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
   return (
     <>
       <Tooltip title="Settings">
-        <IconButton aria-label="Settings" onClick={handleClick}>
+        <IconButton aria-label="Settings" onClick={anchorActions.handleClick}>
           <Badge variant="dot" color="secondary" invisible={!!localStorage.getItem(hasVisitedSettingsKey)}>
             <MoreVertIcon />
           </Badge>
@@ -44,7 +37,7 @@ export function KebabMenu(): JSX.Element {
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
-        onClose={handleClose}
+        onClose={anchorActions.handleClose}
         getContentAnchorEl={null}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         transformOrigin={{ vertical: 'top', horizontal: 'center' }}
@@ -52,7 +45,7 @@ export function KebabMenu(): JSX.Element {
         <MenuItem
           onClick={() => {
             dispatch(commonSlice.actions.toggleShowHelp());
-            handleClose();
+            anchorActions.handleClose();
           }}
         >
           <ListItemIcon>
@@ -63,7 +56,7 @@ export function KebabMenu(): JSX.Element {
         <MenuItem
           onClick={() => {
             dispatch(commonSlice.actions.toggleFeedback());
-            handleClose();
+            anchorActions.handleClose();
           }}
         >
           <ListItemIcon>
@@ -74,7 +67,7 @@ export function KebabMenu(): JSX.Element {
         <MenuItem
           onClick={() => {
             dispatch(commonSlice.actions.toggleSettings());
-            handleClose();
+            anchorActions.handleClose();
           }}
         >
           <ListItemIcon>

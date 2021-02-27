@@ -89,6 +89,14 @@ export const statsSlice = createSlice({
 
       state.session.lastGamePlayed = now();
     },
+    deleteGame: (state, action: PayloadAction<string>) => {
+      const originalLength = state.session.games.length;
+      state.session.games = state.session.games.filter((it) => it.gameId !== action.payload);
+
+      if (originalLength === state.session.games.length) {
+        throw Error(`No game with gameId ${action.payload} was found`);
+      }
+    },
     finishGame: (
       state,
       action: PayloadAction<{

@@ -7,20 +7,17 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableBody from '@material-ui/core/TableBody';
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 
 import { EnhancedPlayer, Session } from '../../../store/stats/statsRedux';
 
 import CompleteGameButton from './CompleteGameButton';
 import NewPlayerButton from './addplayer/NewPlayerButton';
 import PlayerTableRow from './PlayerTableRow';
+import TableHeaderCell from './TableHeaderCell';
 
 const useStyles = makeStyles({
   playerCell: {
     minWidth: '250px',
-  },
-  gameCell: {
-    minWidth: '100px',
   },
 });
 
@@ -42,9 +39,12 @@ function TableContent({ session }: Props): JSX.Element {
               {session.players.length || 'No'} players
             </TableCell>
             {session.games.map((game, index) => (
-              <TableCell className={classes.gameCell} key={index} width="150px" align="center">
-                <Typography variant={index === 0 ? 'body1' : 'body2'}>Game {session.games.length - index}</Typography>
-              </TableCell>
+              <TableHeaderCell
+                key={game.gameId}
+                gameId={game.gameId}
+                gameNumber={session.games.length - index}
+                isCurrentGame={index === 0}
+              />
             ))}
             <TableCell />
           </TableRow>

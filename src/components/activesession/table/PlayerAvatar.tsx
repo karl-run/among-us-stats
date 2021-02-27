@@ -1,11 +1,12 @@
 import { useDispatch } from 'react-redux';
-import React, { MouseEvent } from 'react';
+import React from 'react';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import { Avatar, IconButton } from '@material-ui/core';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import { EnhancedPlayer, statsSlice } from '../../../store/stats/statsRedux';
+import useAnchor from '../../shared/hooks/useAnchor';
 
 import RemovePlayerMenuItem from './RemovePlayerMenuItem';
 
@@ -15,20 +16,12 @@ interface Props {
 
 function PlayerAvatar({ player }: Props): JSX.Element {
   const dispatch = useDispatch();
-  const [anchorEl, setAnchorEl] = React.useState<Element | null>(null);
-
-  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const [anchorEl, anchorActions] = useAnchor();
 
   return (
     <>
       <ListItemAvatar style={{ opacity: player.isAfk ? 0.3 : 1 }}>
-        <IconButton aria-controls="player-menu" aria-haspopup="true" onClick={handleClick}>
+        <IconButton aria-controls="player-menu" aria-haspopup="true" onClick={anchorActions.handleClick}>
           <Avatar>{player.name.slice(0, 2).toUpperCase()}</Avatar>
         </IconButton>
       </ListItemAvatar>
@@ -37,7 +30,7 @@ function PlayerAvatar({ player }: Props): JSX.Element {
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
-        onClose={handleClose}
+        onClose={anchorActions.handleClose}
         anchorOrigin={{
           vertical: 'top',
           horizontal: 'center',
@@ -50,12 +43,12 @@ function PlayerAvatar({ player }: Props): JSX.Element {
         <MenuItem
           onClick={() => {
             dispatch(statsSlice.actions.toggleAfk({ playerId: player.playerId }));
-            setAnchorEl(null);
+            anchorActions.handleClose();
           }}
         >
           {player.isAfk ? 'Set not AFK' : 'Set AFK'}
         </MenuItem>
-        <RemovePlayerMenuItem player={player} close={handleClose} />
+        <RemovePlayerMenuItem player={player} close={anchorActions.handleClose} />
       </Menu>
     </>
   );
