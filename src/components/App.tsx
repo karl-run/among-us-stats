@@ -13,7 +13,6 @@ import IntroDialog from './dialogs/IntroDialog';
 import SettingsDialog from './dialogs/SettingsDialog';
 import FeedbackDialog from './dialogs/FeedbackDialog';
 import NotFound from './NotFound';
-import Analytics from './Analytics';
 import { theme } from './theme';
 import ContentWrapper from './ContentWrapper';
 import ErrorBoundary from './ErrorBoundary';
@@ -31,7 +30,6 @@ function App(): JSX.Element {
               <IntroDialog />
               <SettingsDialog />
               <FeedbackDialog />
-              <Analytics />
               <CssBaseline />
               <AppBar />
               <ContentWrapper>
