@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import GA from 'react-ga';
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
 
@@ -14,12 +13,6 @@ interface Props {
 
 function NewPlayerButton({ session, noPlayers }: Props): JSX.Element {
   const [show, set] = useState(false);
-
-  useEffect(() => {
-    if (show) {
-      GA.event({ category: 'View', action: 'addPlayerDialog' });
-    }
-  }, [show]);
 
   const closeDialog = () => {
     set(false);

@@ -1,12 +1,9 @@
-import GA from 'react-ga';
-
 import { Game, Player, UUID } from './statsRedux';
 
 export function getPlayer(players: Record<UUID, Player>, playerId: UUID): Player {
   const player = players[playerId];
 
   if (!player) {
-    GA.event({ category: 'Error', action: 'Missing player' });
     return { name: 'Unknown player', playerId: 'unknown' };
   }
 

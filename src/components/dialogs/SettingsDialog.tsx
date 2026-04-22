@@ -12,7 +12,6 @@ import Dialog from '@material-ui/core/Dialog';
 import TextField from '@material-ui/core/TextField/TextField';
 import Box from '@material-ui/core/Box';
 import { Check, Close, ExpandMore } from '@material-ui/icons';
-import GA from 'react-ga';
 import Badge from '@material-ui/core/Badge';
 
 import { commonSlice, hasVisitedSettingsKey } from '../../store/common/commonRedux';
@@ -29,7 +28,6 @@ function SettingsDialog(): JSX.Element | null {
   useEffect(() => {
     if (shouldShow) {
       localStorage.setItem(hasVisitedSettingsKey, 'true');
-      GA.event({ category: 'View', action: 'settingsDialog' });
     }
   }, [shouldShow]);
 
@@ -57,15 +55,12 @@ function SettingsDialog(): JSX.Element | null {
       });
 
       if (result.status < 299) {
-        GA.event({ category: 'Social', action: 'testDiscordWebhook', label: 'hook-good' });
         setTestResult('good');
       } else {
-        GA.event({ category: 'Social', action: 'testDiscordWebhook', label: 'hook-bad-response' });
         setTestResult('bad');
       }
     } catch (e) {
       console.error(e);
-      GA.event({ category: 'Social', action: 'testDiscordWebhook', label: 'hook-bad-request' });
       setTestResult('bad');
     }
   };

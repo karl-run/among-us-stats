@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import GA from 'react-ga';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
@@ -19,12 +18,6 @@ function SummaryDialog({ open, close }: Props): JSX.Element {
   const theme = useTheme();
   const isSmallDevice = useMediaQuery(theme.breakpoints.down('xs'));
   const session = useSelector(getSession);
-
-  useEffect(() => {
-    if (open) {
-      GA.event({ category: 'View', action: 'summaryDialog' });
-    }
-  }, [open]);
 
   return (
     <Dialog

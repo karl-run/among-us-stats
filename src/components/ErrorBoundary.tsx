@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import GA from 'react-ga';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper/Paper';
 import Box from '@material-ui/core/Box';
@@ -7,8 +6,6 @@ import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import WarningIcon from '@material-ui/icons/Warning';
 import Button from '@material-ui/core/Button';
-
-import { reportError } from '../utils/reportError';
 
 import CrewAvatar from './shared/avatar/CrewAvatar';
 
@@ -30,11 +27,6 @@ class ErrorBoundary extends Component<Props, State> {
     return {
       hasError: true,
     };
-  }
-
-  componentDidCatch(error: Error): void {
-    GA.exception({ description: `Error boundary: ${error.message}`, fatal: true });
-    reportError('error boundary', error);
   }
 
   render(): JSX.Element {

@@ -1,5 +1,4 @@
 import React, { MutableRefObject, useState } from 'react';
-import GA from 'react-ga';
 import { useTheme } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
 import html2canvas from 'html2canvas';
@@ -21,8 +20,6 @@ function DiscordShareButton({ shareBoxRef }: { shareBoxRef: MutableRefObject<HTM
 
   const handleClick = async () => {
     if (!shareBoxRef.current) return;
-
-    GA.event({ category: 'Social', action: 'sharedDiscord' });
 
     const canvasElement = await html2canvas(shareBoxRef.current, {
       backgroundColor: theme.palette.background.paper,

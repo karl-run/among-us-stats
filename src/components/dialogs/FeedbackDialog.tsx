@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import GA from 'react-ga';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import Grid from '@material-ui/core/Grid';
@@ -18,12 +17,6 @@ import { commonSlice, hasBeenShownIntroKey } from '../../store/common/commonRedu
 function FeedbackDialog(): JSX.Element | null {
   const dispatch = useDispatch();
   const shouldShow = useSelector((state: RootState) => state.common.showFeedback);
-
-  useEffect(() => {
-    if (shouldShow) {
-      GA.event({ category: 'View', action: 'feedbackDialog' });
-    }
-  }, [shouldShow]);
 
   const handleClose = () => {
     dispatch(commonSlice.actions.toggleFeedback());
